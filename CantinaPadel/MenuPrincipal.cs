@@ -42,5 +42,22 @@ namespace CantinaPadel
         {
             Application.Exit();
         }
+
+        private void panelBotones_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnProductos_Click(object sender, EventArgs e)
+        {
+            FormListadoProductos formListadoProductos = new FormListadoProductos();
+            AbrirFormularioEnPanel(formListadoProductos);
+        }
+
+        private void btnReservas_Click(object sender, EventArgs e)
+        {
+            FormReservas formReservas = new FormReservas();
+            AbrirFormularioEnPanel(formReservas);
+        }
     }
 }

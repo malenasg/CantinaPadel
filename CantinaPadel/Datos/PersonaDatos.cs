@@ -21,9 +21,9 @@ namespace CantinaPadel.Datos
                                     p.id_persona AS ID,
 
                                     CASE 
-                                        WHEN p.razon_social IS NOT NULL AND p.razon_social <> '' 
-                                        THEN p.razon_social
-                                        ELSE CONCAT(p.nombre, ' ', p.apellido)
+                                        WHEN pr.razon_social IS NOT NULL AND pr.razon_social <> '' 
+                                        THEN pr.razon_social
+                                        ELSE CONCAT_WS(' ', p.nombre, p.apellido)
                                     END AS Nombre,
 
                                     p.cuit AS 'CUIT/CUIL',
@@ -32,27 +32,17 @@ namespace CantinaPadel.Datos
                                     p.direccion AS Dirección,
 
                                     CONCAT_WS(', ',
-                                        CASE 
-                                            WHEN c.id_cliente IS NOT NULL AND c.activo = TRUE THEN 'Cliente' 
-                                        END,
-                                        CASE 
-                                            WHEN e.id_empleado IS NOT NULL AND e.activo = TRUE THEN 'Empleado' 
-                                        END,
-                                        CASE 
-                                            WHEN pr.id_proveedor IS NOT NULL AND pr.activo = TRUE THEN 'Proveedor' 
-                                        END
+                                        CASE WHEN c.id_cliente IS NOT NULL AND c.activo = TRUE THEN 'Cliente' END,
+                                        CASE WHEN e.id_empleado IS NOT NULL AND e.activo = TRUE THEN 'Empleado' END,
+                                        CASE WHEN pr.id_proveedor IS NOT NULL AND pr.activo = TRUE THEN 'Proveedor' END
                                     ) AS Tipo,
 
-                                    CASE 
-                                        WHEN p.activo = TRUE THEN 'Sí'
-                                        ELSE 'No'
-                                    END AS Activo
+                                    CASE WHEN p.activo = TRUE THEN 'Sí' ELSE 'No' END AS Activo
 
                                 FROM persona p
                                 LEFT JOIN cliente c ON p.id_persona = c.id_persona
                                 LEFT JOIN empleado e ON p.id_persona = e.id_persona
-                                LEFT JOIN proveedor pr ON p.id_persona = pr.id_persona
-                                WHERE p.activo = TRUE";
+                                LEFT JOIN proveedor pr ON p.id_persona = pr.id_persona";
 
                     MySqlDataAdapter da = new MySqlDataAdapter(consulta, cn);
                     da.Fill(tabla);
@@ -78,9 +68,9 @@ namespace CantinaPadel.Datos
                                     p.id_persona AS ID,
 
                                     CASE 
-                                        WHEN p.razon_social IS NOT NULL AND p.razon_social <> '' 
-                                        THEN p.razon_social
-                                        ELSE CONCAT(p.nombre, ' ', p.apellido)
+                                        WHEN pr.razon_social IS NOT NULL AND pr.razon_social <> '' 
+                                        THEN pr.razon_social
+                                        ELSE CONCAT_WS(' ', p.nombre, p.apellido)
                                     END AS Nombre,
 
                                     p.cuit AS 'CUIT/CUIL',
@@ -89,31 +79,21 @@ namespace CantinaPadel.Datos
                                     p.direccion AS Dirección,
 
                                     CONCAT_WS(', ',
-                                        CASE 
-                                            WHEN c.id_cliente IS NOT NULL AND c.activo = TRUE THEN 'Cliente' 
-                                        END,
-                                        CASE 
-                                            WHEN e.id_empleado IS NOT NULL AND e.activo = TRUE THEN 'Empleado' 
-                                        END,
-                                        CASE 
-                                            WHEN pr.id_proveedor IS NOT NULL AND pr.activo = TRUE THEN 'Proveedor' 
-                                        END
+                                        CASE WHEN c.id_cliente IS NOT NULL AND c.activo = TRUE THEN 'Cliente' END,
+                                        CASE WHEN e.id_empleado IS NOT NULL AND e.activo = TRUE THEN 'Empleado' END,
+                                        CASE WHEN pr.id_proveedor IS NOT NULL AND pr.activo = TRUE THEN 'Proveedor' END
                                     ) AS Tipo,
 
-                                    CASE 
-                                        WHEN p.activo = TRUE THEN 'Sí'
-                                        ELSE 'No'
-                                    END AS Activo
+                                    CASE WHEN p.activo = TRUE THEN 'Sí' ELSE 'No' END AS Activo
 
                                 FROM persona p
                                 LEFT JOIN cliente c ON p.id_persona = c.id_persona
                                 LEFT JOIN empleado e ON p.id_persona = e.id_persona
                                 LEFT JOIN proveedor pr ON p.id_persona = pr.id_persona
-                                WHERE p.activo = TRUE
-                                AND (
+                                WHERE (
                                     p.nombre LIKE @texto
                                     OR p.apellido LIKE @texto
-                                    OR p.razon_social LIKE @texto
+                                    OR pr.razon_social LIKE @texto
                                     OR p.cuit LIKE @texto
                                     OR p.telefono LIKE @texto
                                     OR p.email LIKE @texto
@@ -147,29 +127,20 @@ namespace CantinaPadel.Datos
                                         p.id_persona,
                                         p.nombre,
                                         p.apellido,
-                                        p.razon_social,
+                                        pr.razon_social,
                                         p.cuit,
+                                        pr.condicion_fiscal,
                                         p.telefono,
                                         p.email,
                                         p.direccion,
                                         p.activo,
 
-                                        CASE 
-                                            WHEN c.id_cliente IS NOT NULL AND c.activo = 1 THEN 1
-                                            ELSE 0
-                                        END AS es_cliente,
-
-                                        CASE 
-                                            WHEN e.id_empleado IS NOT NULL AND e.activo = 1 THEN 1
-                                            ELSE 0
-                                        END AS es_empleado,
-
+                                        CASE WHEN c.id_cliente IS NOT NULL AND c.activo = 1 THEN 1 ELSE 0 END AS es_cliente,
+                                        CASE WHEN e.id_empleado IS NOT NULL AND e.activo = 1 THEN 1 ELSE 0 END AS es_empleado,
+                                        
                                         e.fecha_ingreso,
 
-                                        CASE 
-                                            WHEN pr.id_proveedor IS NOT NULL AND pr.activo = 1 THEN 1
-                                            ELSE 0
-                                        END AS es_proveedor
+                                        CASE WHEN pr.id_proveedor IS NOT NULL AND pr.activo = 1 THEN 1 ELSE 0 END AS es_proveedor
 
                                     FROM persona p
                                     LEFT JOIN cliente c ON p.id_persona = c.id_persona
@@ -192,43 +163,36 @@ namespace CantinaPadel.Datos
             return tabla;
         }
 
-        public int Insertar(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor, DateTime? fechaIngreso)
+        public int Insertar(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor)
         {
             int idPersonaGenerado = 0;
 
             using (MySqlConnection cn = conexion.CrearConexion())
             {
                 cn.Open();
-
                 MySqlTransaction transaccion = cn.BeginTransaction();
 
                 try
                 {
                     string consultaPersona = @"INSERT INTO persona
-                                      (nombre, apellido, razon_social, cuit, telefono, email, direccion, activo)
+                                      (nombre, apellido, cuit, telefono, email, direccion, activo)
                                       VALUES
-                                      (@nombre, @apellido, @razon_social, @cuit, @telefono, @email, @direccion, TRUE);
+                                      (@nombre, @apellido, @cuit, @telefono, @email, @direccion, TRUE);
                                       SELECT LAST_INSERT_ID();";
 
                     MySqlCommand cmdPersona = new MySqlCommand(consultaPersona, cn, transaccion);
-
                     cmdPersona.Parameters.AddWithValue("@nombre", persona.Nombre);
-                    cmdPersona.Parameters.AddWithValue("@apellido", persona.Apellido);
-                    cmdPersona.Parameters.AddWithValue("@razon_social", persona.RazonSocial);
-                    cmdPersona.Parameters.AddWithValue("@cuit", persona.Cuit);
-                    cmdPersona.Parameters.AddWithValue("@telefono", persona.Telefono);
-                    cmdPersona.Parameters.AddWithValue("@email", persona.Email);
-                    cmdPersona.Parameters.AddWithValue("@direccion", persona.Direccion);
+                    cmdPersona.Parameters.AddWithValue("@apellido", (object)persona.Apellido ?? DBNull.Value);
+                    cmdPersona.Parameters.AddWithValue("@cuit", (object)persona.Cuit ?? DBNull.Value);
+                    cmdPersona.Parameters.AddWithValue("@telefono", (object)persona.Telefono ?? DBNull.Value);
+                    cmdPersona.Parameters.AddWithValue("@email", (object)persona.Email ?? DBNull.Value);
+                    cmdPersona.Parameters.AddWithValue("@direccion", (object)persona.Direccion ?? DBNull.Value);
 
                     idPersonaGenerado = Convert.ToInt32(cmdPersona.ExecuteScalar());
 
                     if (esCliente)
                     {
-                        string consultaCliente = @"INSERT INTO cliente
-                                          (id_persona, activo)
-                                          VALUES
-                                          (@id_persona, TRUE)";
-
+                        string consultaCliente = @"INSERT INTO cliente (id_persona, activo) VALUES (@id_persona, TRUE)";
                         MySqlCommand cmdCliente = new MySqlCommand(consultaCliente, cn, transaccion);
                         cmdCliente.Parameters.AddWithValue("@id_persona", idPersonaGenerado);
                         cmdCliente.ExecuteNonQuery();
@@ -236,26 +200,22 @@ namespace CantinaPadel.Datos
 
                     if (esEmpleado)
                     {
-                        string consultaEmpleado = @"INSERT INTO empleado
-                                           (id_persona, fecha_ingreso, activo)
-                                           VALUES
-                                           (@id_persona, @fecha_ingreso, TRUE)";
-
+                        string consultaEmpleado = @"INSERT INTO empleado (id_persona, fecha_ingreso, activo) 
+                                                    VALUES (@id_persona, @fecha_ingreso, TRUE)";
                         MySqlCommand cmdEmpleado = new MySqlCommand(consultaEmpleado, cn, transaccion);
                         cmdEmpleado.Parameters.AddWithValue("@id_persona", idPersonaGenerado);
-                        cmdEmpleado.Parameters.AddWithValue("@fecha_ingreso", fechaIngreso);
+                        cmdEmpleado.Parameters.AddWithValue("@fecha_ingreso", (object)persona.FechaIngreso ?? DBNull.Value);
                         cmdEmpleado.ExecuteNonQuery();
                     }
 
                     if (esProveedor)
                     {
-                        string consultaProveedor = @"INSERT INTO proveedor
-                                            (id_persona, activo)
-                                            VALUES
-                                            (@id_persona, TRUE)";
-
+                        string consultaProveedor = @"INSERT INTO proveedor (id_persona, razon_social, condicion_fiscal, activo)
+                                                     VALUES (@id_persona, @razon_social, @condicion_fiscal, TRUE)";
                         MySqlCommand cmdProveedor = new MySqlCommand(consultaProveedor, cn, transaccion);
                         cmdProveedor.Parameters.AddWithValue("@id_persona", idPersonaGenerado);
+                        cmdProveedor.Parameters.AddWithValue("@razon_social", (object)persona.RazonSocial ?? DBNull.Value);
+                        cmdProveedor.Parameters.AddWithValue("@condicion_fiscal", (object)persona.CondicionFiscal ?? DBNull.Value);
                         cmdProveedor.ExecuteNonQuery();
                     }
 
@@ -271,12 +231,11 @@ namespace CantinaPadel.Datos
             return idPersonaGenerado;
         }
 
-        public void Modificar(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor, DateTime? fechaIngreso)
+        public void Modificar(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor)
         {
             using (MySqlConnection cn = conexion.CrearConexion())
             {
                 cn.Open();
-
                 MySqlTransaction transaccion = cn.BeginTransaction();
 
                 try
@@ -284,7 +243,6 @@ namespace CantinaPadel.Datos
                     string consultaPersona = @"UPDATE persona SET
                                             nombre = @nombre,
                                             apellido = @apellido,
-                                            razon_social = @razon_social,
                                             cuit = @cuit,
                                             telefono = @telefono,
                                             email = @email,
@@ -292,34 +250,26 @@ namespace CantinaPadel.Datos
                                        WHERE id_persona = @id_persona";
 
                     MySqlCommand cmdPersona = new MySqlCommand(consultaPersona, cn, transaccion);
-
                     cmdPersona.Parameters.AddWithValue("@id_persona", persona.IdPersona);
                     cmdPersona.Parameters.AddWithValue("@nombre", persona.Nombre);
-                    cmdPersona.Parameters.AddWithValue("@apellido", persona.Apellido);
-                    cmdPersona.Parameters.AddWithValue("@razon_social", persona.RazonSocial);
-                    cmdPersona.Parameters.AddWithValue("@cuit", persona.Cuit);
-                    cmdPersona.Parameters.AddWithValue("@telefono", persona.Telefono);
-                    cmdPersona.Parameters.AddWithValue("@email", persona.Email);
-                    cmdPersona.Parameters.AddWithValue("@direccion", persona.Direccion);
-
+                    cmdPersona.Parameters.AddWithValue("@apellido", (object)persona.Apellido ?? DBNull.Value);
+                    cmdPersona.Parameters.AddWithValue("@cuit", (object)persona.Cuit ?? DBNull.Value);
+                    cmdPersona.Parameters.AddWithValue("@telefono", (object)persona.Telefono ?? DBNull.Value);
+                    cmdPersona.Parameters.AddWithValue("@email", (object)persona.Email ?? DBNull.Value);
+                    cmdPersona.Parameters.AddWithValue("@direccion", (object)persona.Direccion ?? DBNull.Value);
                     cmdPersona.ExecuteNonQuery();
 
                     if (esCliente)
                     {
-                        string consultaCliente = @"INSERT INTO cliente(id_persona, activo)
-                                           VALUES(@id_persona, TRUE)
-                                           ON DUPLICATE KEY UPDATE activo = TRUE";
-
+                        string consultaCliente = @"INSERT INTO cliente(id_persona, activo) VALUES(@id_persona, TRUE)
+                                                   ON DUPLICATE KEY UPDATE activo = TRUE";
                         MySqlCommand cmdCliente = new MySqlCommand(consultaCliente, cn, transaccion);
                         cmdCliente.Parameters.AddWithValue("@id_persona", persona.IdPersona);
                         cmdCliente.ExecuteNonQuery();
                     }
                     else
                     {
-                        string consultaCliente = @"UPDATE cliente
-                                           SET activo = FALSE
-                                           WHERE id_persona = @id_persona";
-
+                        string consultaCliente = @"UPDATE cliente SET activo = FALSE WHERE id_persona = @id_persona";
                         MySqlCommand cmdCliente = new MySqlCommand(consultaCliente, cn, transaccion);
                         cmdCliente.Parameters.AddWithValue("@id_persona", persona.IdPersona);
                         cmdCliente.ExecuteNonQuery();
@@ -328,22 +278,16 @@ namespace CantinaPadel.Datos
                     if (esEmpleado)
                     {
                         string consultaEmpleado = @"INSERT INTO empleado(id_persona, fecha_ingreso, activo)
-                                            VALUES(@id_persona, @fecha_ingreso, TRUE)
-                                            ON DUPLICATE KEY UPDATE 
-                                                fecha_ingreso = @fecha_ingreso,
-                                                activo = TRUE";
-
+                                                    VALUES(@id_persona, @fecha_ingreso, TRUE)
+                                                    ON DUPLICATE KEY UPDATE fecha_ingreso = @fecha_ingreso, activo = TRUE";
                         MySqlCommand cmdEmpleado = new MySqlCommand(consultaEmpleado, cn, transaccion);
                         cmdEmpleado.Parameters.AddWithValue("@id_persona", persona.IdPersona);
-                        cmdEmpleado.Parameters.AddWithValue("@fecha_ingreso", fechaIngreso);
+                        cmdEmpleado.Parameters.AddWithValue("@fecha_ingreso", (object)persona.FechaIngreso ?? DBNull.Value);
                         cmdEmpleado.ExecuteNonQuery();
                     }
                     else
                     {
-                        string consultaEmpleado = @"UPDATE empleado
-                                            SET activo = FALSE
-                                            WHERE id_persona = @id_persona";
-
+                        string consultaEmpleado = @"UPDATE empleado SET activo = FALSE WHERE id_persona = @id_persona";
                         MySqlCommand cmdEmpleado = new MySqlCommand(consultaEmpleado, cn, transaccion);
                         cmdEmpleado.Parameters.AddWithValue("@id_persona", persona.IdPersona);
                         cmdEmpleado.ExecuteNonQuery();
@@ -351,20 +295,18 @@ namespace CantinaPadel.Datos
 
                     if (esProveedor)
                     {
-                        string consultaProveedor = @"INSERT INTO proveedor(id_persona, activo)
-                                             VALUES(@id_persona, TRUE)
-                                             ON DUPLICATE KEY UPDATE activo = TRUE";
-
+                        string consultaProveedor = @"INSERT INTO proveedor(id_persona, razon_social, condicion_fiscal, activo)
+                                                     VALUES(@id_persona, @razon_social, @condicion_fiscal, TRUE)
+                                                     ON DUPLICATE KEY UPDATE razon_social = @razon_social, condicion_fiscal = @condicion_fiscal, activo = TRUE";
                         MySqlCommand cmdProveedor = new MySqlCommand(consultaProveedor, cn, transaccion);
                         cmdProveedor.Parameters.AddWithValue("@id_persona", persona.IdPersona);
+                        cmdProveedor.Parameters.AddWithValue("@razon_social", (object)persona.RazonSocial ?? DBNull.Value);
+                        cmdProveedor.Parameters.AddWithValue("@condicion_fiscal", (object)persona.CondicionFiscal ?? DBNull.Value);
                         cmdProveedor.ExecuteNonQuery();
                     }
                     else
                     {
-                        string consultaProveedor = @"UPDATE proveedor
-                                             SET activo = FALSE
-                                             WHERE id_persona = @id_persona";
-
+                        string consultaProveedor = @"UPDATE proveedor SET activo = FALSE WHERE id_persona = @id_persona";
                         MySqlCommand cmdProveedor = new MySqlCommand(consultaProveedor, cn, transaccion);
                         cmdProveedor.Parameters.AddWithValue("@id_persona", persona.IdPersona);
                         cmdProveedor.ExecuteNonQuery();
@@ -385,39 +327,26 @@ namespace CantinaPadel.Datos
             using (MySqlConnection cn = conexion.CrearConexion())
             {
                 cn.Open();
-
                 MySqlTransaction transaccion = cn.BeginTransaction();
 
                 try
                 {
-                    string consultaPersona = @"UPDATE persona
-                                       SET activo = FALSE
-                                       WHERE id_persona = @id_persona";
-
+                    string consultaPersona = @"UPDATE persona SET activo = FALSE WHERE id_persona = @id_persona";
                     MySqlCommand cmdPersona = new MySqlCommand(consultaPersona, cn, transaccion);
                     cmdPersona.Parameters.AddWithValue("@id_persona", idPersona);
                     cmdPersona.ExecuteNonQuery();
 
-                    string consultaCliente = @"UPDATE cliente
-                                       SET activo = FALSE
-                                       WHERE id_persona = @id_persona";
-
+                    string consultaCliente = @"UPDATE cliente SET activo = FALSE WHERE id_persona = @id_persona";
                     MySqlCommand cmdCliente = new MySqlCommand(consultaCliente, cn, transaccion);
                     cmdCliente.Parameters.AddWithValue("@id_persona", idPersona);
                     cmdCliente.ExecuteNonQuery();
 
-                    string consultaEmpleado = @"UPDATE empleado
-                                        SET activo = FALSE
-                                        WHERE id_persona = @id_persona";
-
+                    string consultaEmpleado = @"UPDATE empleado SET activo = FALSE WHERE id_persona = @id_persona";
                     MySqlCommand cmdEmpleado = new MySqlCommand(consultaEmpleado, cn, transaccion);
                     cmdEmpleado.Parameters.AddWithValue("@id_persona", idPersona);
                     cmdEmpleado.ExecuteNonQuery();
 
-                    string consultaProveedor = @"UPDATE proveedor
-                                         SET activo = FALSE
-                                         WHERE id_persona = @id_persona";
-
+                    string consultaProveedor = @"UPDATE proveedor SET activo = FALSE WHERE id_persona = @id_persona";
                     MySqlCommand cmdProveedor = new MySqlCommand(consultaProveedor, cn, transaccion);
                     cmdProveedor.Parameters.AddWithValue("@id_persona", idPersona);
                     cmdProveedor.ExecuteNonQuery();
@@ -432,4 +361,4 @@ namespace CantinaPadel.Datos
             }
         }
     }
-    }
+}

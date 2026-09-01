@@ -35,7 +35,6 @@
             btnActualizar = new Button();
             panelPrincipal = new Panel();
             panelBotones = new Panel();
-            btnBuscar = new Button();
             btnModificar = new Button();
             btnBaja = new Button();
             txtBuscar = new TextBox();
@@ -49,13 +48,16 @@
             // 
             // dgvPersonas
             // 
+            dgvPersonas.AllowUserToAddRows = false;
             dgvPersonas.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.ForeColor = Color.Black;
             dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.SelectionBackColor = Color.RosyBrown;
-            dataGridViewCellStyle1.SelectionForeColor = Color.RosyBrown;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.AppWorkspace;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dgvPersonas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvPersonas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvPersonas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvPersonas.BackgroundColor = SystemColors.Control;
             dgvPersonas.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -67,17 +69,21 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvPersonas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvPersonas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPersonas.Dock = DockStyle.Fill;
-            dgvPersonas.Location = new Point(0, 118);
+            dgvPersonas.Location = new Point(10, 118);
             dgvPersonas.Margin = new Padding(10, 5, 20, 20);
+            dgvPersonas.MultiSelect = false;
             dgvPersonas.Name = "dgvPersonas";
-            dgvPersonas.Size = new Size(1074, 443);
+            dgvPersonas.ReadOnly = true;
+            dgvPersonas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPersonas.Size = new Size(792, 324);
             dgvPersonas.TabIndex = 22;
             dgvPersonas.CellClick += dgvPersonas_CellClick;
+            dgvPersonas.CellContentClick += dgvPersonas_CellContentClick;
             // 
             // btnNuevo
             // 
-            btnNuevo.Location = new Point(726, 7);
+            btnNuevo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnNuevo.Location = new Point(464, 7);
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Size = new Size(80, 23);
             btnNuevo.TabIndex = 25;
@@ -87,7 +93,8 @@
             // 
             // btnActualizar
             // 
-            btnActualizar.Location = new Point(984, 7);
+            btnActualizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnActualizar.Location = new Point(722, 7);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.Size = new Size(80, 23);
             btnActualizar.TabIndex = 23;
@@ -97,6 +104,7 @@
             // 
             // panelPrincipal
             // 
+            panelPrincipal.AutoSize = true;
             panelPrincipal.BackColor = Color.White;
             panelPrincipal.Controls.Add(dgvPersonas);
             panelPrincipal.Controls.Add(panelBotones);
@@ -104,12 +112,11 @@
             panelPrincipal.Dock = DockStyle.Fill;
             panelPrincipal.Location = new Point(0, 0);
             panelPrincipal.Name = "panelPrincipal";
-            panelPrincipal.Size = new Size(1074, 561);
+            panelPrincipal.Size = new Size(812, 450);
             panelPrincipal.TabIndex = 29;
             // 
             // panelBotones
             // 
-            panelBotones.Controls.Add(btnBuscar);
             panelBotones.Controls.Add(btnModificar);
             panelBotones.Controls.Add(btnBaja);
             panelBotones.Controls.Add(btnNuevo);
@@ -118,22 +125,13 @@
             panelBotones.Dock = DockStyle.Top;
             panelBotones.Location = new Point(0, 81);
             panelBotones.Name = "panelBotones";
-            panelBotones.Size = new Size(1074, 37);
+            panelBotones.Size = new Size(812, 37);
             panelBotones.TabIndex = 0;
-            // 
-            // btnBuscar
-            // 
-            btnBuscar.Location = new Point(265, 7);
-            btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(100, 23);
-            btnBuscar.TabIndex = 28;
-            btnBuscar.Text = "Buscar";
-            btnBuscar.UseVisualStyleBackColor = true;
-            btnBuscar.Click += btnBuscar_Click;
             // 
             // btnModificar
             // 
-            btnModificar.Location = new Point(812, 7);
+            btnModificar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnModificar.Location = new Point(550, 7);
             btnModificar.Name = "btnModificar";
             btnModificar.Size = new Size(80, 23);
             btnModificar.TabIndex = 26;
@@ -143,7 +141,8 @@
             // 
             // btnBaja
             // 
-            btnBaja.Location = new Point(898, 7);
+            btnBaja.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnBaja.Location = new Point(636, 7);
             btnBaja.Name = "btnBaja";
             btnBaja.Size = new Size(80, 23);
             btnBaja.TabIndex = 27;
@@ -153,9 +152,10 @@
             // 
             // txtBuscar
             // 
-            txtBuscar.Location = new Point(12, 7);
+            txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBuscar.Location = new Point(10, 7);
             txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(247, 23);
+            txtBuscar.Size = new Size(448, 23);
             txtBuscar.TabIndex = 24;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
@@ -165,30 +165,30 @@
             panelSuperior.Dock = DockStyle.Top;
             panelSuperior.Location = new Point(0, 0);
             panelSuperior.Name = "panelSuperior";
-            panelSuperior.Size = new Size(1074, 81);
+            panelSuperior.Size = new Size(812, 81);
             panelSuperior.TabIndex = 0;
             // 
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(13, 49);
+            lblTitulo.Location = new Point(3, 49);
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(107, 32);
             lblTitulo.TabIndex = 28;
             lblTitulo.Text = "Personas";
-            lblTitulo.Click += label1_Click;
             // 
             // FormListadoPersonas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1074, 561);
+            ClientSize = new Size(812, 450);
             Controls.Add(panelPrincipal);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormListadoPersonas";
             StartPosition = FormStartPosition.Manual;
             Text = "FormListadoPersonas";
+            Load += FormListadoPersonas_Load;
             ((System.ComponentModel.ISupportInitialize)dgvPersonas).EndInit();
             panelPrincipal.ResumeLayout(false);
             panelBotones.ResumeLayout(false);
@@ -196,6 +196,7 @@
             panelSuperior.ResumeLayout(false);
             panelSuperior.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -207,7 +208,6 @@
         private Panel panelSuperior;
         private Panel panelBotones;
         private TextBox txtBuscar;
-        private Button btnBuscar;
         private Label lblTitulo;
         private Button btnModificar;
         private Button btnBaja;

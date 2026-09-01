@@ -32,7 +32,6 @@
             panelBotones = new Panel();
             btnSalir = new Button();
             btnReportes = new Button();
-            btnCanchas = new Button();
             btnProductos = new Button();
             btnPersonas = new Button();
             btnCaja = new Button();
@@ -60,10 +59,12 @@
             // 
             // splitContainer1.Panel1
             // 
+            splitContainer1.Panel1.AccessibleRole = AccessibleRole.MenuBar;
             splitContainer1.Panel1.BackColor = Color.FromArgb(64, 0, 0);
             splitContainer1.Panel1.Controls.Add(panelBotones);
             splitContainer1.Panel1.Controls.Add(panelHeader);
             splitContainer1.Panel1.ForeColor = SystemColors.ActiveCaption;
+            splitContainer1.Panel1.ImeMode = ImeMode.NoControl;
             splitContainer1.Panel1.RightToLeft = RightToLeft.No;
             // 
             // splitContainer1.Panel2
@@ -80,7 +81,6 @@
             panelBotones.BackColor = Color.Transparent;
             panelBotones.Controls.Add(btnSalir);
             panelBotones.Controls.Add(btnReportes);
-            panelBotones.Controls.Add(btnCanchas);
             panelBotones.Controls.Add(btnProductos);
             panelBotones.Controls.Add(btnPersonas);
             panelBotones.Controls.Add(btnCaja);
@@ -91,6 +91,7 @@
             panelBotones.Name = "panelBotones";
             panelBotones.Size = new Size(187, 461);
             panelBotones.TabIndex = 1;
+            panelBotones.Paint += panelBotones_Paint;
             // 
             // btnSalir
             // 
@@ -100,11 +101,12 @@
             btnSalir.FlatStyle = FlatStyle.Flat;
             btnSalir.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
-            btnSalir.Location = new Point(0, 421);
+            btnSalir.Location = new Point(0, 432);
             btnSalir.Name = "btnSalir";
-            btnSalir.Size = new Size(187, 40);
+            btnSalir.Size = new Size(187, 29);
             btnSalir.TabIndex = 7;
             btnSalir.Text = "Salir";
+            btnSalir.TextAlign = ContentAlignment.BottomCenter;
             btnSalir.UseVisualStyleBackColor = true;
             btnSalir.Click += btnSalir_Click;
             // 
@@ -118,31 +120,13 @@
             btnReportes.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReportes.ForeColor = Color.White;
             btnReportes.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReportes.Location = new Point(0, 240);
+            btnReportes.Location = new Point(0, 200);
             btnReportes.Name = "btnReportes";
             btnReportes.Size = new Size(187, 40);
             btnReportes.TabIndex = 6;
             btnReportes.Text = "Reportes";
             btnReportes.TextAlign = ContentAlignment.MiddleLeft;
             btnReportes.UseVisualStyleBackColor = true;
-            // 
-            // btnCanchas
-            // 
-            btnCanchas.Dock = DockStyle.Top;
-            btnCanchas.FlatAppearance.BorderSize = 0;
-            btnCanchas.FlatAppearance.MouseDownBackColor = Color.FromArgb(64, 0, 0);
-            btnCanchas.FlatAppearance.MouseOverBackColor = Color.FromArgb(64, 0, 0);
-            btnCanchas.FlatStyle = FlatStyle.Flat;
-            btnCanchas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCanchas.ForeColor = Color.White;
-            btnCanchas.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCanchas.Location = new Point(0, 200);
-            btnCanchas.Name = "btnCanchas";
-            btnCanchas.Size = new Size(187, 40);
-            btnCanchas.TabIndex = 5;
-            btnCanchas.Text = "Canchas";
-            btnCanchas.TextAlign = ContentAlignment.MiddleLeft;
-            btnCanchas.UseVisualStyleBackColor = true;
             // 
             // btnProductos
             // 
@@ -161,6 +145,7 @@
             btnProductos.Text = "Productos";
             btnProductos.TextAlign = ContentAlignment.MiddleLeft;
             btnProductos.UseVisualStyleBackColor = true;
+            btnProductos.Click += btnProductos_Click;
             // 
             // btnPersonas
             // 
@@ -219,6 +204,7 @@
             // 
             // btnReservas
             // 
+            btnReservas.BackgroundImageLayout = ImageLayout.None;
             btnReservas.Dock = DockStyle.Top;
             btnReservas.FlatAppearance.BorderSize = 0;
             btnReservas.FlatStyle = FlatStyle.Flat;
@@ -232,6 +218,7 @@
             btnReservas.Text = "Reservas";
             btnReservas.TextAlign = ContentAlignment.MiddleLeft;
             btnReservas.UseVisualStyleBackColor = true;
+            btnReservas.Click += btnReservas_Click;
             // 
             // panelHeader
             // 
@@ -242,7 +229,7 @@
             panelHeader.Controls.Add(lblNombre);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
-            panelHeader.MaximumSize = new Size(0, 120);
+            panelHeader.MaximumSize = new Size(0, 100);
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(187, 100);
             panelHeader.TabIndex = 0;
@@ -309,10 +296,11 @@
             Controls.Add(splitContainer1);
             MinimumSize = new Size(1000, 600);
             Name = "MenuPrincipal";
+            ShowIcon = false;
+            ShowInTaskbar = false;
             SizeGripStyle = SizeGripStyle.Show;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MenuPrincipal";
-            WindowState = FormWindowState.Maximized;
             Load += MenuPrincipal_Load;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
@@ -335,7 +323,6 @@
         private Button btnReservas;
         private Button btnSalir;
         private Button btnReportes;
-        private Button btnCanchas;
         private Button btnProductos;
         private Button btnPersonas;
         private Button btnCaja;

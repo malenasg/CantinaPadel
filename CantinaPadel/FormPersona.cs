@@ -110,7 +110,7 @@ namespace CantinaPadel
                     fechaIngreso = dtpIngreso.Value;
                 }
 
-                personaNegocio.Insertar(persona, esCliente, esEmpleado, esProveedor, fechaIngreso);
+                personaNegocio.Insertar(persona, esCliente, esEmpleado, esProveedor);
 
                 MessageBox.Show("Persona guardada correctamente.");
 
@@ -248,7 +248,7 @@ namespace CantinaPadel
                     fechaIngreso = dtpIngreso.Value;
                 }
 
-                personaNegocio.Modificar(persona, esCliente, esEmpleado, esProveedor, fechaIngreso);
+                personaNegocio.Modificar(persona, esCliente, esEmpleado, esProveedor);
 
                 MessageBox.Show("Persona modificada correctamente.");
 

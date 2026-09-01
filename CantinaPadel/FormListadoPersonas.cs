@@ -64,12 +64,9 @@ namespace CantinaPadel
 
         private void dgvPersonas_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-            {
-                return;
-            }
+            if (e.RowIndex < 0) return;
 
-            idPersonaSeleccionada = Convert.ToInt32(dgvPersonas.Rows[e.RowIndex].Cells["ID"].Value);
+            idPersonaSeleccionada = Convert.ToInt32(dgvPersonas.Rows[e.RowIndex].Cells["ID"].Value); // <-- ACÁ
 
             btnModificar.Enabled = true;
             btnBaja.Enabled = true;
@@ -121,21 +118,11 @@ namespace CantinaPadel
             }
         }
 
-        private void txtBuscar_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnModificar_Click(object sender, EventArgs e)
         {
             if (idPersonaSeleccionada == 0)
             {
-                MessageBox.Show("Debe seleccionar una persona del listado.");
+                MessageBox.Show("Debe seleccionar una persona de la lista.");
                 return;
             }
 
@@ -148,6 +135,27 @@ namespace CantinaPadel
                 idPersonaSeleccionada = 0;
                 btnModificar.Enabled = false;
                 btnBaja.Enabled = false;
+            }
+        }
+
+        private void dgvPersonas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                dgvPersonas.DataSource = personaNegocio.Buscar(txtBuscar.Text); // <-- ACÁ
+
+                idPersonaSeleccionada = 0;
+                btnModificar.Enabled = false;
+                btnBaja.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
