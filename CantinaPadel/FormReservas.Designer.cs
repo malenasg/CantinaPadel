@@ -51,6 +51,7 @@
             calFecha.Location = new Point(21, 12);
             calFecha.Name = "calFecha";
             calFecha.TabIndex = 0;
+            calFecha.DateChanged += calFecha_DateChanged;
             // 
             // lblTitulo
             // 
@@ -82,6 +83,7 @@
             dgvReservas.SelectionMode = DataGridViewSelectionMode.CellSelect;
             dgvReservas.Size = new Size(504, 263);
             dgvReservas.TabIndex = 2;
+            dgvReservas.CellClick += dgvAgenda_CellClick;
             dgvReservas.CellContentClick += dgvReservas_CellContentClick;
             // 
             // panel1
@@ -102,6 +104,7 @@
             btnCancelar.TabIndex = 1;
             btnCancelar.Text = "Cancelar reserva";
             btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // btnNuevo
             // 
@@ -111,7 +114,7 @@
             btnNuevo.TabIndex = 0;
             btnNuevo.Text = "Nueva reserva";
             btnNuevo.UseVisualStyleBackColor = true;
-            btnNuevo.Click += btnNuevo_Click;
+            btnNuevo.Click += btnNuevaReserva_Click;
             // 
             // panel2
             // 
@@ -164,6 +167,7 @@
             Controls.Add(panelSuperior);
             Name = "FormReservas";
             Text = "FormReservas";
+            Load += FormReservas_Load;
             panelSuperior.ResumeLayout(false);
             panelSuperior.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvReservas).EndInit();

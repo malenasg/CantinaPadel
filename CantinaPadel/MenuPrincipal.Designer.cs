@@ -53,6 +53,7 @@
             // 
             // splitContainer1
             // 
+            splitContainer1.BackColor = SystemColors.ButtonHighlight;
             splitContainer1.Dock = DockStyle.Fill;
             splitContainer1.Location = new Point(0, 0);
             splitContainer1.Name = "splitContainer1";
@@ -60,7 +61,7 @@
             // splitContainer1.Panel1
             // 
             splitContainer1.Panel1.AccessibleRole = AccessibleRole.MenuBar;
-            splitContainer1.Panel1.BackColor = Color.FromArgb(64, 0, 0);
+            splitContainer1.Panel1.BackColor = Color.DarkSlateGray;
             splitContainer1.Panel1.Controls.Add(panelBotones);
             splitContainer1.Panel1.Controls.Add(panelHeader);
             splitContainer1.Panel1.ForeColor = SystemColors.ActiveCaption;
@@ -97,7 +98,8 @@
             // 
             btnSalir.Dock = DockStyle.Bottom;
             btnSalir.FlatAppearance.BorderSize = 0;
-            btnSalir.FlatAppearance.MouseOverBackColor = Color.FromArgb(198, 57, 43);
+            btnSalir.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnSalir.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
             btnSalir.FlatStyle = FlatStyle.Flat;
             btnSalir.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
@@ -114,8 +116,8 @@
             // 
             btnReportes.Dock = DockStyle.Top;
             btnReportes.FlatAppearance.BorderSize = 0;
-            btnReportes.FlatAppearance.MouseDownBackColor = Color.FromArgb(64, 0, 0);
-            btnReportes.FlatAppearance.MouseOverBackColor = Color.FromArgb(64, 0, 0);
+            btnReportes.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnReportes.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
             btnReportes.FlatStyle = FlatStyle.Flat;
             btnReportes.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReportes.ForeColor = Color.White;
@@ -132,8 +134,8 @@
             // 
             btnProductos.Dock = DockStyle.Top;
             btnProductos.FlatAppearance.BorderSize = 0;
-            btnProductos.FlatAppearance.MouseDownBackColor = Color.FromArgb(64, 0, 0);
-            btnProductos.FlatAppearance.MouseOverBackColor = Color.FromArgb(64, 0, 0);
+            btnProductos.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnProductos.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
             btnProductos.FlatStyle = FlatStyle.Flat;
             btnProductos.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnProductos.ForeColor = Color.White;
@@ -151,8 +153,8 @@
             // 
             btnPersonas.Dock = DockStyle.Top;
             btnPersonas.FlatAppearance.BorderSize = 0;
-            btnPersonas.FlatAppearance.MouseDownBackColor = Color.FromArgb(64, 0, 0);
-            btnPersonas.FlatAppearance.MouseOverBackColor = Color.FromArgb(64, 0, 0);
+            btnPersonas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnPersonas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
             btnPersonas.FlatStyle = FlatStyle.Flat;
             btnPersonas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnPersonas.ForeColor = Color.White;
@@ -170,8 +172,8 @@
             // 
             btnCaja.Dock = DockStyle.Top;
             btnCaja.FlatAppearance.BorderSize = 0;
-            btnCaja.FlatAppearance.MouseDownBackColor = Color.FromArgb(64, 0, 0);
-            btnCaja.FlatAppearance.MouseOverBackColor = Color.FromArgb(64, 0, 0);
+            btnCaja.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnCaja.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
             btnCaja.FlatStyle = FlatStyle.Flat;
             btnCaja.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCaja.ForeColor = Color.White;
@@ -188,8 +190,8 @@
             // 
             btnVentas.Dock = DockStyle.Top;
             btnVentas.FlatAppearance.BorderSize = 0;
-            btnVentas.FlatAppearance.MouseDownBackColor = Color.FromArgb(64, 0, 0);
-            btnVentas.FlatAppearance.MouseOverBackColor = Color.FromArgb(64, 0, 0);
+            btnVentas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnVentas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
             btnVentas.FlatStyle = FlatStyle.Flat;
             btnVentas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnVentas.ForeColor = Color.White;
@@ -207,6 +209,8 @@
             btnReservas.BackgroundImageLayout = ImageLayout.None;
             btnReservas.Dock = DockStyle.Top;
             btnReservas.FlatAppearance.BorderSize = 0;
+            btnReservas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnReservas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
             btnReservas.FlatStyle = FlatStyle.Flat;
             btnReservas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReservas.ForeColor = Color.White;
@@ -274,7 +278,7 @@
             lblNombre.AutoSize = true;
             lblNombre.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblNombre.ForeColor = Color.White;
-            lblNombre.Location = new Point(15, 13);
+            lblNombre.Location = new Point(15, 17);
             lblNombre.Name = "lblNombre";
             lblNombre.Size = new Size(152, 25);
             lblNombre.TabIndex = 0;
@@ -292,6 +296,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(984, 561);
             Controls.Add(splitContainer1);
             MinimumSize = new Size(1000, 600);

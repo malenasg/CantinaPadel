@@ -136,10 +136,5 @@ namespace CantinaPadel
             dtpInicio.Value = DateTime.Today.AddHours(18);
             dtpFin.Value = DateTime.Today.AddHours(19).AddMinutes(30);
         }
-
-        private void dgvHorarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

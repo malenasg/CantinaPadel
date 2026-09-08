@@ -163,6 +163,28 @@ namespace CantinaPadel.Datos
             return tabla;
         }
 
+        public DataTable ObtenerTodas()
+        {
+            DataTable tabla = new DataTable();
+            using (MySqlConnection cn = conexion.CrearConexion()) // Asumiendo que tu variable de conexión se llama así
+            {
+                try
+                {
+                    // Traemos los datos básicos para llenar el desplegable
+                    string consulta = @"SELECT p.id_persona, p.nombre 
+                                        FROM persona p 
+                                        INNER JOIN cliente c ON p.id_persona = c.id_cliente";
+                    MySqlDataAdapter da = new MySqlDataAdapter(consulta, cn);
+                    da.Fill(tabla);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al cargar la lista de personas: " + ex.Message);
+                }
+            }
+            return tabla;
+        }
+
         public int Insertar(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor)
         {
             int idPersonaGenerado = 0;

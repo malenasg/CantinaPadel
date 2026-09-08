@@ -17,7 +17,7 @@ namespace CantinaPadel.Datos
                 using (MySqlConnection cn = conexion.CrearConexion())
                 {
                     // Ordenamos por hora para que en la grilla se vean ordenaditos de mañana a noche
-                    string consulta = "SELECT id_horario, hora_inicio, hora_fin FROM horario ORDER BY hora_inicio";
+                    string consulta = "SELECT id_horario, TIME_FORMAT(hora_inicio, '%H:%i') AS hora_inicio, TIME_FORMAT(hora_fin, '%H:%i') AS hora_fin FROM horario";
                     MySqlDataAdapter da = new MySqlDataAdapter(consulta, cn);
                     da.Fill(tabla);
                 }

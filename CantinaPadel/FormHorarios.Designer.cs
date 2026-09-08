@@ -65,10 +65,10 @@
             dgvHorarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvHorarios.Location = new Point(12, 147);
             dgvHorarios.Name = "dgvHorarios";
+            dgvHorarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvHorarios.Size = new Size(383, 175);
             dgvHorarios.TabIndex = 2;
-            dgvHorarios.CellContentClick += dgvHorarios_CellClick;
-            dgvHorarios.CellContentDoubleClick += dgvHorarios_CellContentClick;
+            dgvHorarios.CellClick += dgvHorarios_CellClick;
             // 
             // lblInicio
             // 

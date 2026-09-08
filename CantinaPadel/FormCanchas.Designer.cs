@@ -43,8 +43,11 @@
             dgvCancha.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCancha.Location = new Point(12, 147);
             dgvCancha.Name = "dgvCancha";
+            dgvCancha.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCancha.Size = new Size(383, 175);
             dgvCancha.TabIndex = 0;
+            dgvCancha.CellClick += dgvCanchas_CellClick;
+            dgvCancha.CellContentClick += dgvCanchas_CellClick;
             // 
             // txtCancha
             // 
@@ -99,6 +102,7 @@
             btnEliminar.TabIndex = 6;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // FormCanchas
             // 
@@ -114,6 +118,7 @@
             Controls.Add(dgvCancha);
             Name = "FormCanchas";
             Text = "Gestión de canchas";
+            Load += FormCanchas_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCancha).EndInit();
             ResumeLayout(false);
             PerformLayout();

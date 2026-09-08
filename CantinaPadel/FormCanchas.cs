@@ -95,5 +95,33 @@ namespace CantinaPadel
                 txtCancha.Text = fila.Cells["nombre"].Value.ToString();
             }
         }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (idCanchaSeleccionada == null)
+                {
+                    MessageBox.Show("Por favor, seleccione una cancha de la lista para eliminar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DialogResult respuesta = MessageBox.Show("¿Está seguro de que desea eliminar (desactivar) esta cancha?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    canchaNegocio.Eliminar(idCanchaSeleccionada.Value);
+                    MessageBox.Show("Cancha eliminada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    txtCancha.Clear();
+                    idCanchaSeleccionada = null;
+                    CargarGrilla();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

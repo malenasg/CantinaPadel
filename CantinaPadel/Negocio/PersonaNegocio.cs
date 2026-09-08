@@ -34,6 +34,11 @@ namespace CantinaPadel.Negocio
             return personaDatos.ObtenerPorId(idPersona);
         }
 
+        public DataTable ObtenerTodas()
+        {
+            return personaDatos.ObtenerTodas(); // Asegurate de que tu variable instanciada de PersonaDatos se llame así
+        }
+
         private void ValidarPersona(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor)
         {
             // 1. El nombre ahora siempre es obligatorio (sea la persona física o el contacto del proveedor)
