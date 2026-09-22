@@ -34,7 +34,7 @@ namespace CantinaPadel
                 dgvCompras.DataSource = compraNegocio.ObtenerCompras();
 
                 // Opcional: Ocultar la columna del ID si no quieren que se vea
-                // dgvCompras.Columns["id_compra"].Visible = false;
+                dgvCompras.Columns["id_compra"].Visible = false;
             }
             catch (Exception ex)
             {
@@ -102,6 +102,11 @@ namespace CantinaPadel
             // Abrimos la ventana de detalle pasándole el ID
             FormDetalleCompra ventanaDetalle = new FormDetalleCompra(idCompra);
             ventanaDetalle.ShowDialog();
+        }
+
+        private void dgvCompras_DoubleClick(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -66,48 +66,53 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvCompras.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvCompras.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCompras.Location = new Point(9, 122);
-            dgvCompras.Margin = new Padding(10, 5, 20, 20);
+            dgvCompras.Location = new Point(10, 163);
+            dgvCompras.Margin = new Padding(11, 7, 23, 27);
             dgvCompras.MultiSelect = false;
             dgvCompras.Name = "dgvCompras";
             dgvCompras.ReadOnly = true;
+            dgvCompras.RowHeadersWidth = 51;
             dgvCompras.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCompras.Size = new Size(775, 283);
+            dgvCompras.Size = new Size(886, 377);
             dgvCompras.TabIndex = 25;
+            dgvCompras.DoubleClick += dgvCompras_DoubleClick;
             // 
             // panelSuperior
             // 
             panelSuperior.Controls.Add(lblTitulo);
             panelSuperior.Dock = DockStyle.Top;
             panelSuperior.Location = new Point(0, 0);
+            panelSuperior.Margin = new Padding(3, 4, 3, 4);
             panelSuperior.Name = "panelSuperior";
-            panelSuperior.Size = new Size(796, 81);
+            panelSuperior.Size = new Size(910, 108);
             panelSuperior.TabIndex = 24;
             // 
             // lblTitulo
             // 
             lblTitulo.AutoSize = true;
             lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTitulo.Location = new Point(3, 49);
+            lblTitulo.Location = new Point(3, 65);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(108, 32);
+            lblTitulo.Size = new Size(137, 41);
             lblTitulo.TabIndex = 28;
             lblTitulo.Text = "Compras";
             // 
             // txtBuscar
             // 
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtBuscar.Location = new Point(10, 7);
+            txtBuscar.Location = new Point(11, 9);
+            txtBuscar.Margin = new Padding(3, 4, 3, 4);
             txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(403, 23);
+            txtBuscar.Size = new Size(460, 27);
             txtBuscar.TabIndex = 24;
             // 
             // btnNuevo
             // 
             btnNuevo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnNuevo.Location = new Point(532, 6);
+            btnNuevo.Location = new Point(608, 8);
+            btnNuevo.Margin = new Padding(3, 4, 3, 4);
             btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(80, 23);
+            btnNuevo.Size = new Size(91, 31);
             btnNuevo.TabIndex = 25;
             btnNuevo.Text = "Nuevo";
             btnNuevo.UseVisualStyleBackColor = true;
@@ -116,9 +121,10 @@
             // btnAnular
             // 
             btnAnular.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAnular.Location = new Point(618, 6);
+            btnAnular.Location = new Point(706, 8);
+            btnAnular.Margin = new Padding(3, 4, 3, 4);
             btnAnular.Name = "btnAnular";
-            btnAnular.Size = new Size(80, 23);
+            btnAnular.Size = new Size(91, 31);
             btnAnular.TabIndex = 27;
             btnAnular.Text = "Anular";
             btnAnular.UseVisualStyleBackColor = true;
@@ -131,17 +137,19 @@
             panelBotones.Controls.Add(btnAnular);
             panelBotones.Controls.Add(btnNuevo);
             panelBotones.Dock = DockStyle.Top;
-            panelBotones.Location = new Point(0, 81);
+            panelBotones.Location = new Point(0, 108);
+            panelBotones.Margin = new Padding(3, 4, 3, 4);
             panelBotones.Name = "panelBotones";
-            panelBotones.Size = new Size(796, 37);
+            panelBotones.Size = new Size(910, 49);
             panelBotones.TabIndex = 23;
             // 
             // btnAumentar
             // 
             btnAumentar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAumentar.Location = new Point(704, 7);
+            btnAumentar.Location = new Point(805, 9);
+            btnAumentar.Margin = new Padding(3, 4, 3, 4);
             btnAumentar.Name = "btnAumentar";
-            btnAumentar.Size = new Size(80, 23);
+            btnAumentar.Size = new Size(91, 31);
             btnAumentar.TabIndex = 28;
             btnAumentar.Text = "Aumentar precio";
             btnAumentar.UseVisualStyleBackColor = true;
@@ -149,13 +157,14 @@
             // 
             // FormCompras
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(796, 411);
+            ClientSize = new Size(910, 548);
             Controls.Add(dgvCompras);
             Controls.Add(panelBotones);
             Controls.Add(panelSuperior);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormCompras";
             Load += FormCompras_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCompras).EndInit();

@@ -34,56 +34,59 @@
             lblFecha = new Label();
             gbDatosCompra = new GroupBox();
             dbDatosProductos = new GroupBox();
+            btnAgregar = new Button();
+            txtPrecio = new TextBox();
+            nudCantidad = new NumericUpDown();
+            lblPrecio = new Label();
             lblProducto = new Label();
             cmbProducto = new ComboBox();
             lblCantidad = new Label();
             gbCarrito = new GroupBox();
-            lblPrecio = new Label();
-            nudCantidad = new NumericUpDown();
-            txtPrecio = new TextBox();
-            dgvCarrito = new DataGridView();
-            btnAgregar = new Button();
-            btnGuardar = new Button();
-            lblTotal = new Label();
             btnQuitar = new Button();
-            button1 = new Button();
+            lblTotal = new Label();
+            btnGuardar = new Button();
+            btnCancelar = new Button();
+            dgvCarrito = new DataGridView();
             gbDatosCompra.SuspendLayout();
             dbDatosProductos.SuspendLayout();
-            gbCarrito.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
+            gbCarrito.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).BeginInit();
             SuspendLayout();
             // 
             // lblProveedor
             // 
             lblProveedor.AutoSize = true;
-            lblProveedor.Location = new Point(14, 20);
+            lblProveedor.Location = new Point(16, 27);
             lblProveedor.Name = "lblProveedor";
-            lblProveedor.Size = new Size(64, 15);
+            lblProveedor.Size = new Size(80, 20);
             lblProveedor.TabIndex = 0;
             lblProveedor.Text = "Proveedor:";
             // 
             // cmbProveedor
             // 
             cmbProveedor.FormattingEnabled = true;
-            cmbProveedor.Location = new Point(98, 17);
+            cmbProveedor.Location = new Point(112, 23);
+            cmbProveedor.Margin = new Padding(3, 4, 3, 4);
             cmbProveedor.Name = "cmbProveedor";
-            cmbProveedor.Size = new Size(328, 23);
+            cmbProveedor.Size = new Size(374, 28);
             cmbProveedor.TabIndex = 1;
+            cmbProveedor.SelectedIndexChanged += cmbProveedor_SelectedIndexChanged;
             // 
             // dtpFecha
             // 
-            dtpFecha.Location = new Point(98, 46);
+            dtpFecha.Location = new Point(112, 61);
+            dtpFecha.Margin = new Padding(3, 4, 3, 4);
             dtpFecha.Name = "dtpFecha";
-            dtpFecha.Size = new Size(328, 23);
+            dtpFecha.Size = new Size(374, 27);
             dtpFecha.TabIndex = 2;
             // 
             // lblFecha
             // 
             lblFecha.AutoSize = true;
-            lblFecha.Location = new Point(14, 52);
+            lblFecha.Location = new Point(16, 69);
             lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(41, 15);
+            lblFecha.Size = new Size(50, 20);
             lblFecha.TabIndex = 3;
             lblFecha.Text = "Fecha:";
             // 
@@ -93,52 +96,94 @@
             gbDatosCompra.Controls.Add(cmbProveedor);
             gbDatosCompra.Controls.Add(dtpFecha);
             gbDatosCompra.Controls.Add(lblProveedor);
-            gbDatosCompra.Location = new Point(25, 12);
+            gbDatosCompra.Location = new Point(29, 16);
+            gbDatosCompra.Margin = new Padding(3, 4, 3, 4);
             gbDatosCompra.Name = "gbDatosCompra";
-            gbDatosCompra.Size = new Size(441, 78);
+            gbDatosCompra.Padding = new Padding(3, 4, 3, 4);
+            gbDatosCompra.Size = new Size(504, 104);
             gbDatosCompra.TabIndex = 5;
             gbDatosCompra.TabStop = false;
             gbDatosCompra.Text = "groupBox1";
             // 
             // dbDatosProductos
             // 
-            dbDatosProductos.Controls.Add(button1);
+            dbDatosProductos.Controls.Add(btnAgregar);
             dbDatosProductos.Controls.Add(txtPrecio);
             dbDatosProductos.Controls.Add(nudCantidad);
             dbDatosProductos.Controls.Add(lblPrecio);
             dbDatosProductos.Controls.Add(lblProducto);
             dbDatosProductos.Controls.Add(cmbProducto);
             dbDatosProductos.Controls.Add(lblCantidad);
-            dbDatosProductos.Location = new Point(25, 96);
+            dbDatosProductos.Location = new Point(29, 128);
+            dbDatosProductos.Margin = new Padding(3, 4, 3, 4);
             dbDatosProductos.Name = "dbDatosProductos";
-            dbDatosProductos.Size = new Size(441, 105);
+            dbDatosProductos.Padding = new Padding(3, 4, 3, 4);
+            dbDatosProductos.Size = new Size(504, 140);
             dbDatosProductos.TabIndex = 6;
             dbDatosProductos.TabStop = false;
             dbDatosProductos.Text = "groupBox2";
             // 
+            // btnAgregar
+            // 
+            btnAgregar.Location = new Point(451, 97);
+            btnAgregar.Margin = new Padding(3, 4, 3, 4);
+            btnAgregar.Name = "btnAgregar";
+            btnAgregar.Size = new Size(35, 31);
+            btnAgregar.TabIndex = 6;
+            btnAgregar.Text = "+";
+            btnAgregar.TextAlign = ContentAlignment.TopCenter;
+            btnAgregar.UseVisualStyleBackColor = true;
+            btnAgregar.Click += btnAgregar_Click;
+            // 
+            // txtPrecio
+            // 
+            txtPrecio.Location = new Point(112, 97);
+            txtPrecio.Margin = new Padding(3, 4, 3, 4);
+            txtPrecio.Name = "txtPrecio";
+            txtPrecio.Size = new Size(332, 27);
+            txtPrecio.TabIndex = 5;
+            // 
+            // nudCantidad
+            // 
+            nudCantidad.Location = new Point(112, 61);
+            nudCantidad.Margin = new Padding(3, 4, 3, 4);
+            nudCantidad.Name = "nudCantidad";
+            nudCantidad.Size = new Size(375, 27);
+            nudCantidad.TabIndex = 4;
+            // 
+            // lblPrecio
+            // 
+            lblPrecio.AutoSize = true;
+            lblPrecio.Location = new Point(16, 101);
+            lblPrecio.Name = "lblPrecio";
+            lblPrecio.Size = new Size(65, 20);
+            lblPrecio.TabIndex = 3;
+            lblPrecio.Text = "Precio: $";
+            // 
             // lblProducto
             // 
             lblProducto.AutoSize = true;
-            lblProducto.Location = new Point(14, 20);
+            lblProducto.Location = new Point(16, 27);
             lblProducto.Name = "lblProducto";
-            lblProducto.Size = new Size(59, 15);
+            lblProducto.Size = new Size(72, 20);
             lblProducto.TabIndex = 3;
             lblProducto.Text = "Producto:";
             // 
             // cmbProducto
             // 
             cmbProducto.FormattingEnabled = true;
-            cmbProducto.Location = new Point(98, 17);
+            cmbProducto.Location = new Point(112, 23);
+            cmbProducto.Margin = new Padding(3, 4, 3, 4);
             cmbProducto.Name = "cmbProducto";
-            cmbProducto.Size = new Size(328, 23);
+            cmbProducto.Size = new Size(374, 28);
             cmbProducto.TabIndex = 1;
             // 
             // lblCantidad
             // 
             lblCantidad.AutoSize = true;
-            lblCantidad.Location = new Point(14, 48);
+            lblCantidad.Location = new Point(16, 64);
             lblCantidad.Name = "lblCantidad";
-            lblCantidad.Size = new Size(55, 15);
+            lblCantidad.Size = new Size(69, 20);
             lblCantidad.TabIndex = 0;
             lblCantidad.Text = "Cantidad";
             // 
@@ -147,111 +192,90 @@
             gbCarrito.Controls.Add(btnQuitar);
             gbCarrito.Controls.Add(lblTotal);
             gbCarrito.Controls.Add(btnGuardar);
-            gbCarrito.Controls.Add(btnAgregar);
+            gbCarrito.Controls.Add(btnCancelar);
             gbCarrito.Controls.Add(dgvCarrito);
-            gbCarrito.Location = new Point(25, 207);
+            gbCarrito.Location = new Point(29, 276);
+            gbCarrito.Margin = new Padding(3, 4, 3, 4);
             gbCarrito.Name = "gbCarrito";
-            gbCarrito.Size = new Size(441, 231);
+            gbCarrito.Padding = new Padding(3, 4, 3, 4);
+            gbCarrito.Size = new Size(504, 308);
             gbCarrito.TabIndex = 7;
             gbCarrito.TabStop = false;
             gbCarrito.Text = "groupBox3";
             // 
-            // lblPrecio
+            // btnQuitar
             // 
-            lblPrecio.AutoSize = true;
-            lblPrecio.Location = new Point(14, 76);
-            lblPrecio.Name = "lblPrecio";
-            lblPrecio.Size = new Size(52, 15);
-            lblPrecio.TabIndex = 3;
-            lblPrecio.Text = "Precio: $";
+            btnQuitar.Location = new Point(15, 228);
+            btnQuitar.Margin = new Padding(3, 4, 3, 4);
+            btnQuitar.Name = "btnQuitar";
+            btnQuitar.Size = new Size(86, 31);
+            btnQuitar.TabIndex = 4;
+            btnQuitar.Text = "Quitar";
+            btnQuitar.UseVisualStyleBackColor = true;
+            btnQuitar.Click += btnQuitar_Click;
             // 
-            // nudCantidad
+            // lblTotal
             // 
-            nudCantidad.Location = new Point(98, 46);
-            nudCantidad.Name = "nudCantidad";
-            nudCantidad.Size = new Size(328, 23);
-            nudCantidad.TabIndex = 4;
+            lblTotal.AutoSize = true;
+            lblTotal.Location = new Point(317, 233);
+            lblTotal.Name = "lblTotal";
+            lblTotal.Size = new Size(45, 20);
+            lblTotal.TabIndex = 3;
+            lblTotal.Text = "Total:";
             // 
-            // txtPrecio
+            // btnGuardar
             // 
-            txtPrecio.Location = new Point(98, 73);
-            txtPrecio.Name = "txtPrecio";
-            txtPrecio.Size = new Size(291, 23);
-            txtPrecio.TabIndex = 5;
+            btnGuardar.Location = new Point(409, 269);
+            btnGuardar.Margin = new Padding(3, 4, 3, 4);
+            btnGuardar.Name = "btnGuardar";
+            btnGuardar.Size = new Size(86, 31);
+            btnGuardar.TabIndex = 2;
+            btnGuardar.Text = "Guardar";
+            btnGuardar.UseVisualStyleBackColor = true;
+            btnGuardar.Click += btnGuardar_Click;
+            // 
+            // btnCancelar
+            // 
+            btnCancelar.Location = new Point(317, 269);
+            btnCancelar.Margin = new Padding(3, 4, 3, 4);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(86, 31);
+            btnCancelar.TabIndex = 1;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // dgvCarrito
             // 
             dgvCarrito.AllowUserToAddRows = false;
             dgvCarrito.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCarrito.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCarrito.Location = new Point(13, 22);
+            dgvCarrito.Location = new Point(15, 29);
+            dgvCarrito.Margin = new Padding(3, 4, 3, 4);
             dgvCarrito.Name = "dgvCarrito";
-            dgvCarrito.Size = new Size(417, 143);
+            dgvCarrito.RowHeadersWidth = 51;
+            dgvCarrito.Size = new Size(477, 191);
             dgvCarrito.TabIndex = 0;
-            // 
-            // btnAgregar
-            // 
-            btnAgregar.Location = new Point(277, 202);
-            btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(75, 23);
-            btnAgregar.TabIndex = 1;
-            btnAgregar.Text = "+";
-            btnAgregar.UseVisualStyleBackColor = true;
-            // 
-            // btnGuardar
-            // 
-            btnGuardar.Location = new Point(358, 202);
-            btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(75, 23);
-            btnGuardar.TabIndex = 2;
-            btnGuardar.Text = "Guardar";
-            btnGuardar.UseVisualStyleBackColor = true;
-            // 
-            // lblTotal
-            // 
-            lblTotal.AutoSize = true;
-            lblTotal.Location = new Point(277, 175);
-            lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(35, 15);
-            lblTotal.TabIndex = 3;
-            lblTotal.Text = "Total:";
-            // 
-            // btnQuitar
-            // 
-            btnQuitar.Location = new Point(13, 171);
-            btnQuitar.Name = "btnQuitar";
-            btnQuitar.Size = new Size(75, 23);
-            btnQuitar.TabIndex = 4;
-            btnQuitar.Text = "Quitar";
-            btnQuitar.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(395, 73);
-            button1.Name = "button1";
-            button1.Size = new Size(31, 23);
-            button1.TabIndex = 6;
-            button1.Text = "+";
-            button1.TextAlign = ContentAlignment.TopCenter;
-            button1.UseVisualStyleBackColor = true;
             // 
             // FormNuevaCompra
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(481, 450);
+            ClientSize = new Size(550, 600);
             Controls.Add(gbCarrito);
             Controls.Add(dbDatosProductos);
             Controls.Add(gbDatosCompra);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormNuevaCompra";
             Text = "FormNuevaCompra";
+            Load += FormNuevaCompra_Load;
             gbDatosCompra.ResumeLayout(false);
             gbDatosCompra.PerformLayout();
             dbDatosProductos.ResumeLayout(false);
             dbDatosProductos.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
             gbCarrito.ResumeLayout(false);
             gbCarrito.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).EndInit();
             ResumeLayout(false);
         }
@@ -273,9 +297,9 @@
         private GroupBox gbCarrito;
         private Label lblTotal;
         private Button btnGuardar;
-        private Button btnAgregar;
+        private Button btnCancelar;
         private DataGridView dgvCarrito;
         private Button btnQuitar;
-        private Button button1;
+        private Button btnAgregar;
     }
 }

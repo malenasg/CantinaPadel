@@ -37,8 +37,8 @@ namespace CantinaPadel
             {
                 // Llenamos el combo de Proveedores (Asumo que tenés un método así en Sprint 2)
                 cmbProveedor.DataSource = personaNegocio.ObtenerProveedores();
-                cmbProveedor.DisplayMember = "nombre"; // Lo que ve el usuario
-                cmbProveedor.ValueMember = "id_persona"; // Lo que guardamos en la BD
+                cmbProveedor.DisplayMember = "razon_social"; // Lo que ve el usuario
+                cmbProveedor.ValueMember = "id_proveedor"; // Lo que guardamos en la BD
 
                 // Llenamos el combo de Productos (Sprint 3)
                 cmbProducto.DataSource = productoNegocio.ObtenerProductos();
@@ -147,6 +147,17 @@ namespace CantinaPadel
             {
                 MessageBox.Show("Error al guardar la factura en la base de datos: " + ex.Message);
             }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void cmbProveedor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

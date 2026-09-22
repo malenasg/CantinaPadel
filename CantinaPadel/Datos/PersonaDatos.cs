@@ -191,7 +191,7 @@ namespace CantinaPadel.Datos
             using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
             {
                 // Filtramos para traer solo a los proveedores
-                string query = "SELECT id_persona, nombre FROM personas WHERE tipo_persona = 'Proveedor' AND estado = 1";
+                string query = "SELECT pr.id_proveedor, pr.razon_social FROM proveedor pr INNER JOIN persona p ON pr.id_persona = p.id_persona WHERE pr.activo = 1";
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
 

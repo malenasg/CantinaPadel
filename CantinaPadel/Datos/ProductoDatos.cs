@@ -123,7 +123,7 @@ namespace CantinaPadel.Datos
             using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
             {
                 // Traemos solo los productos activos
-                string query = "SELECT id_producto, nombre FROM productos WHERE estado = 1";
+                string query = "SELECT id_producto, nombre FROM producto WHERE activo = 1";
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
 
@@ -139,7 +139,7 @@ namespace CantinaPadel.Datos
             using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
             {
                 // Ajustá el nombre de la tabla si en tu BD se llama diferente
-                string query = "SELECT id_marca, nombre FROM marcas";
+                string query = "SELECT id_marca, nombre FROM marca";
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
 
@@ -155,7 +155,7 @@ namespace CantinaPadel.Datos
             using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
             {
                 // Ajustá el nombre de la tabla si en tu BD se llama diferente
-                string query = "SELECT id_categoria, nombre FROM categorias";
+                string query = "SELECT id_categoria, nombre FROM categoria";
                 MySqlCommand comando = new MySqlCommand(query, conexion);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
 
@@ -284,7 +284,7 @@ namespace CantinaPadel.Datos
                     }
 
                     // Calculamos el aumento directo en MySQL: precio * (1 + (porcentaje / 100))
-                    string query = $"UPDATE producto SET precio = precio * (1 + (@porcentaje / 100)) WHERE {columnaFiltro} = @id_filtro";
+                    string query = $"UPDATE producto SET precio_compra = precio_compra * (1 + (@porcentaje / 100)) WHERE {columnaFiltro} = @id_filtro";
 
                     MySqlCommand cmd = new MySqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@porcentaje", porcentaje);

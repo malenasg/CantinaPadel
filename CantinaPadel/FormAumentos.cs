@@ -42,8 +42,8 @@ namespace CantinaPadel
                 if (criterio == "Proveedor")
                 {
                     cmbElemento.DataSource = personaNegocio.ObtenerProveedores();
-                    cmbElemento.DisplayMember = "nombre";
-                    cmbElemento.ValueMember = "id_persona";
+                    cmbElemento.DisplayMember = "razon_social";
+                    cmbElemento.ValueMember = "id_proveedor";
                 }
                 else if (criterio == "Marca")
                 {
@@ -109,6 +109,16 @@ namespace CantinaPadel
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close(); // Simplemente cierra la ventana sin hacer nada
+        }
+
+        private void cmbCriterio_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbElemento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
