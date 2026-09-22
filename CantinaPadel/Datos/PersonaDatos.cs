@@ -9,6 +9,7 @@ namespace CantinaPadel.Datos
     {
         private Conexion conexion = new Conexion();
 
+        // Permite actualizar la lista de personas desde la base de datos
         public DataTable Actualizar()
         {
             DataTable tabla = new DataTable();
@@ -17,9 +18,7 @@ namespace CantinaPadel.Datos
             {
                 using (MySqlConnection cn = conexion.CrearConexion())
                 {
-                    string consulta = @"SELECT 
-                                    p.id_persona AS ID,
-
+                    string consulta = @"SELECT p.id_persona AS ID,
                                     CASE 
                                         WHEN pr.razon_social IS NOT NULL AND pr.razon_social <> '' 
                                         THEN pr.razon_social
@@ -166,7 +165,7 @@ namespace CantinaPadel.Datos
         public DataTable ObtenerTodas()
         {
             DataTable tabla = new DataTable();
-            using (MySqlConnection cn = conexion.CrearConexion()) // Asumiendo que tu variable de conexión se llama así
+            using (MySqlConnection cn = conexion.CrearConexion()) 
             {
                 try
                 {
@@ -183,6 +182,22 @@ namespace CantinaPadel.Datos
                 }
             }
             return tabla;
+        }
+
+        public DataTable ObtenerProveedores()
+        {
+            DataTable dt = new DataTable();
+            // Ajustá la conexión a cómo la manejes en tu proyecto
+            using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
+            {
+                // Filtramos para traer solo a los proveedores
+                string query = "SELECT id_persona, nombre FROM personas WHERE tipo_persona = 'Proveedor' AND estado = 1";
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
+
+                adaptador.Fill(dt);
+            }
+            return dt;
         }
 
         public int Insertar(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor)

@@ -28,19 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuPrincipal));
             splitContainer1 = new SplitContainer();
             panelBotones = new Panel();
-            btnSalir = new Button();
+            btnUsuarios = new Button();
             btnReportes = new Button();
-            btnProductos = new Button();
+            btnCanchas = new Button();
             btnPersonas = new Button();
+            btnCompras = new Button();
+            btnProductos = new Button();
             btnCaja = new Button();
-            btnVentas = new Button();
             btnReservas = new Button();
+            btnVentas = new Button();
+            btnSalir = new Button();
             panelHeader = new Panel();
-            btnMenu = new Button();
-            lblInfo = new Label();
-            lblSubtitulo = new Label();
+            pictureBox1 = new PictureBox();
             lblNombre = new Label();
             panelContenedor = new Panel();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -49,6 +51,7 @@
             splitContainer1.SuspendLayout();
             panelBotones.SuspendLayout();
             panelHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // splitContainer1
@@ -80,19 +83,215 @@
             // 
             panelBotones.AutoScroll = true;
             panelBotones.BackColor = Color.Transparent;
-            panelBotones.Controls.Add(btnSalir);
+            panelBotones.Controls.Add(btnUsuarios);
             panelBotones.Controls.Add(btnReportes);
-            panelBotones.Controls.Add(btnProductos);
+            panelBotones.Controls.Add(btnCanchas);
             panelBotones.Controls.Add(btnPersonas);
+            panelBotones.Controls.Add(btnCompras);
+            panelBotones.Controls.Add(btnProductos);
             panelBotones.Controls.Add(btnCaja);
-            panelBotones.Controls.Add(btnVentas);
             panelBotones.Controls.Add(btnReservas);
+            panelBotones.Controls.Add(btnVentas);
+            panelBotones.Controls.Add(btnSalir);
             panelBotones.Dock = DockStyle.Fill;
             panelBotones.Location = new Point(0, 100);
             panelBotones.Name = "panelBotones";
             panelBotones.Size = new Size(187, 461);
             panelBotones.TabIndex = 1;
-            panelBotones.Paint += panelBotones_Paint;
+            // 
+            // btnUsuarios
+            // 
+            btnUsuarios.Dock = DockStyle.Top;
+            btnUsuarios.FlatAppearance.BorderSize = 0;
+            btnUsuarios.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnUsuarios.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnUsuarios.FlatStyle = FlatStyle.Flat;
+            btnUsuarios.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnUsuarios.ForeColor = Color.White;
+            btnUsuarios.Image = Properties.Resources.manage_accounts_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnUsuarios.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUsuarios.Location = new Point(0, 320);
+            btnUsuarios.Name = "btnUsuarios";
+            btnUsuarios.Padding = new Padding(5, 0, 0, 0);
+            btnUsuarios.Size = new Size(187, 40);
+            btnUsuarios.TabIndex = 10;
+            btnUsuarios.Text = "Usuarios";
+            btnUsuarios.TextAlign = ContentAlignment.MiddleLeft;
+            btnUsuarios.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnUsuarios.UseVisualStyleBackColor = true;
+            // 
+            // btnReportes
+            // 
+            btnReportes.Dock = DockStyle.Top;
+            btnReportes.FlatAppearance.BorderSize = 0;
+            btnReportes.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnReportes.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnReportes.FlatStyle = FlatStyle.Flat;
+            btnReportes.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnReportes.ForeColor = Color.White;
+            btnReportes.Image = Properties.Resources.bar_chart_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnReportes.ImageAlign = ContentAlignment.MiddleLeft;
+            btnReportes.Location = new Point(0, 280);
+            btnReportes.Name = "btnReportes";
+            btnReportes.Padding = new Padding(5, 0, 0, 0);
+            btnReportes.Size = new Size(187, 40);
+            btnReportes.TabIndex = 6;
+            btnReportes.Text = "Reportes";
+            btnReportes.TextAlign = ContentAlignment.MiddleLeft;
+            btnReportes.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnReportes.UseVisualStyleBackColor = true;
+            // 
+            // btnCanchas
+            // 
+            btnCanchas.Dock = DockStyle.Top;
+            btnCanchas.FlatAppearance.BorderSize = 0;
+            btnCanchas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnCanchas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnCanchas.FlatStyle = FlatStyle.Flat;
+            btnCanchas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCanchas.ForeColor = Color.White;
+            btnCanchas.Image = Properties.Resources.padel_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnCanchas.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCanchas.Location = new Point(0, 240);
+            btnCanchas.Name = "btnCanchas";
+            btnCanchas.Padding = new Padding(5, 0, 0, 0);
+            btnCanchas.Size = new Size(187, 40);
+            btnCanchas.TabIndex = 9;
+            btnCanchas.Text = "Canchas";
+            btnCanchas.TextAlign = ContentAlignment.MiddleLeft;
+            btnCanchas.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCanchas.UseVisualStyleBackColor = true;
+            // 
+            // btnPersonas
+            // 
+            btnPersonas.Dock = DockStyle.Top;
+            btnPersonas.FlatAppearance.BorderSize = 0;
+            btnPersonas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnPersonas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnPersonas.FlatStyle = FlatStyle.Flat;
+            btnPersonas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnPersonas.ForeColor = Color.White;
+            btnPersonas.Image = Properties.Resources.group_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnPersonas.ImageAlign = ContentAlignment.MiddleLeft;
+            btnPersonas.Location = new Point(0, 200);
+            btnPersonas.Name = "btnPersonas";
+            btnPersonas.Padding = new Padding(5, 0, 0, 0);
+            btnPersonas.Size = new Size(187, 40);
+            btnPersonas.TabIndex = 3;
+            btnPersonas.Text = "Personas";
+            btnPersonas.TextAlign = ContentAlignment.MiddleLeft;
+            btnPersonas.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnPersonas.UseVisualStyleBackColor = true;
+            btnPersonas.Click += btnPersonas_Click;
+            // 
+            // btnCompras
+            // 
+            btnCompras.Dock = DockStyle.Top;
+            btnCompras.FlatAppearance.BorderSize = 0;
+            btnCompras.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnCompras.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnCompras.FlatStyle = FlatStyle.Flat;
+            btnCompras.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCompras.ForeColor = Color.White;
+            btnCompras.Image = Properties.Resources.pallet_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnCompras.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCompras.Location = new Point(0, 160);
+            btnCompras.Name = "btnCompras";
+            btnCompras.Padding = new Padding(5, 0, 0, 0);
+            btnCompras.Size = new Size(187, 40);
+            btnCompras.TabIndex = 8;
+            btnCompras.Text = "Compras";
+            btnCompras.TextAlign = ContentAlignment.MiddleLeft;
+            btnCompras.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCompras.UseVisualStyleBackColor = true;
+            btnCompras.Click += btnCompras_Click;
+            // 
+            // btnProductos
+            // 
+            btnProductos.Dock = DockStyle.Top;
+            btnProductos.FlatAppearance.BorderSize = 0;
+            btnProductos.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnProductos.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnProductos.FlatStyle = FlatStyle.Flat;
+            btnProductos.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnProductos.ForeColor = Color.White;
+            btnProductos.Image = Properties.Resources.inventory_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnProductos.ImageAlign = ContentAlignment.MiddleLeft;
+            btnProductos.Location = new Point(0, 120);
+            btnProductos.Name = "btnProductos";
+            btnProductos.Padding = new Padding(5, 0, 0, 0);
+            btnProductos.Size = new Size(187, 40);
+            btnProductos.TabIndex = 4;
+            btnProductos.Text = "Productos";
+            btnProductos.TextAlign = ContentAlignment.MiddleLeft;
+            btnProductos.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnProductos.UseVisualStyleBackColor = true;
+            btnProductos.Click += btnProductos_Click;
+            // 
+            // btnCaja
+            // 
+            btnCaja.Dock = DockStyle.Top;
+            btnCaja.FlatAppearance.BorderSize = 0;
+            btnCaja.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnCaja.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnCaja.FlatStyle = FlatStyle.Flat;
+            btnCaja.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCaja.ForeColor = Color.White;
+            btnCaja.Image = Properties.Resources.point_of_sale_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnCaja.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCaja.Location = new Point(0, 80);
+            btnCaja.Name = "btnCaja";
+            btnCaja.Padding = new Padding(5, 0, 0, 0);
+            btnCaja.Size = new Size(187, 40);
+            btnCaja.TabIndex = 2;
+            btnCaja.Text = "Caja";
+            btnCaja.TextAlign = ContentAlignment.MiddleLeft;
+            btnCaja.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCaja.UseVisualStyleBackColor = true;
+            // 
+            // btnReservas
+            // 
+            btnReservas.BackgroundImageLayout = ImageLayout.None;
+            btnReservas.Dock = DockStyle.Top;
+            btnReservas.FlatAppearance.BorderSize = 0;
+            btnReservas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnReservas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnReservas.FlatStyle = FlatStyle.Flat;
+            btnReservas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnReservas.ForeColor = Color.White;
+            btnReservas.Image = Properties.Resources.event_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnReservas.ImageAlign = ContentAlignment.MiddleLeft;
+            btnReservas.Location = new Point(0, 40);
+            btnReservas.Name = "btnReservas";
+            btnReservas.Padding = new Padding(5, 0, 0, 0);
+            btnReservas.Size = new Size(187, 40);
+            btnReservas.TabIndex = 0;
+            btnReservas.Text = "Reservas";
+            btnReservas.TextAlign = ContentAlignment.MiddleLeft;
+            btnReservas.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnReservas.UseVisualStyleBackColor = true;
+            btnReservas.Click += btnReservas_Click;
+            // 
+            // btnVentas
+            // 
+            btnVentas.Dock = DockStyle.Top;
+            btnVentas.FlatAppearance.BorderSize = 0;
+            btnVentas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
+            btnVentas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnVentas.FlatStyle = FlatStyle.Flat;
+            btnVentas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnVentas.ForeColor = Color.White;
+            btnVentas.Image = Properties.Resources.sell_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24;
+            btnVentas.ImageAlign = ContentAlignment.MiddleLeft;
+            btnVentas.Location = new Point(0, 0);
+            btnVentas.Name = "btnVentas";
+            btnVentas.Padding = new Padding(5, 0, 0, 0);
+            btnVentas.Size = new Size(187, 40);
+            btnVentas.TabIndex = 1;
+            btnVentas.Text = "Ventas";
+            btnVentas.TextAlign = ContentAlignment.MiddleLeft;
+            btnVentas.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnVentas.UseVisualStyleBackColor = true;
             // 
             // btnSalir
             // 
@@ -112,124 +311,10 @@
             btnSalir.UseVisualStyleBackColor = true;
             btnSalir.Click += btnSalir_Click;
             // 
-            // btnReportes
-            // 
-            btnReportes.Dock = DockStyle.Top;
-            btnReportes.FlatAppearance.BorderSize = 0;
-            btnReportes.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnReportes.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
-            btnReportes.FlatStyle = FlatStyle.Flat;
-            btnReportes.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnReportes.ForeColor = Color.White;
-            btnReportes.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReportes.Location = new Point(0, 200);
-            btnReportes.Name = "btnReportes";
-            btnReportes.Size = new Size(187, 40);
-            btnReportes.TabIndex = 6;
-            btnReportes.Text = "Reportes";
-            btnReportes.TextAlign = ContentAlignment.MiddleLeft;
-            btnReportes.UseVisualStyleBackColor = true;
-            // 
-            // btnProductos
-            // 
-            btnProductos.Dock = DockStyle.Top;
-            btnProductos.FlatAppearance.BorderSize = 0;
-            btnProductos.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnProductos.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
-            btnProductos.FlatStyle = FlatStyle.Flat;
-            btnProductos.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnProductos.ForeColor = Color.White;
-            btnProductos.ImageAlign = ContentAlignment.MiddleLeft;
-            btnProductos.Location = new Point(0, 160);
-            btnProductos.Name = "btnProductos";
-            btnProductos.Size = new Size(187, 40);
-            btnProductos.TabIndex = 4;
-            btnProductos.Text = "Productos";
-            btnProductos.TextAlign = ContentAlignment.MiddleLeft;
-            btnProductos.UseVisualStyleBackColor = true;
-            btnProductos.Click += btnProductos_Click;
-            // 
-            // btnPersonas
-            // 
-            btnPersonas.Dock = DockStyle.Top;
-            btnPersonas.FlatAppearance.BorderSize = 0;
-            btnPersonas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnPersonas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
-            btnPersonas.FlatStyle = FlatStyle.Flat;
-            btnPersonas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnPersonas.ForeColor = Color.White;
-            btnPersonas.ImageAlign = ContentAlignment.MiddleLeft;
-            btnPersonas.Location = new Point(0, 120);
-            btnPersonas.Name = "btnPersonas";
-            btnPersonas.Size = new Size(187, 40);
-            btnPersonas.TabIndex = 3;
-            btnPersonas.Text = "Personas";
-            btnPersonas.TextAlign = ContentAlignment.MiddleLeft;
-            btnPersonas.UseVisualStyleBackColor = true;
-            btnPersonas.Click += btnPersonas_Click;
-            // 
-            // btnCaja
-            // 
-            btnCaja.Dock = DockStyle.Top;
-            btnCaja.FlatAppearance.BorderSize = 0;
-            btnCaja.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnCaja.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
-            btnCaja.FlatStyle = FlatStyle.Flat;
-            btnCaja.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCaja.ForeColor = Color.White;
-            btnCaja.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCaja.Location = new Point(0, 80);
-            btnCaja.Name = "btnCaja";
-            btnCaja.Size = new Size(187, 40);
-            btnCaja.TabIndex = 2;
-            btnCaja.Text = "Caja";
-            btnCaja.TextAlign = ContentAlignment.MiddleLeft;
-            btnCaja.UseVisualStyleBackColor = true;
-            // 
-            // btnVentas
-            // 
-            btnVentas.Dock = DockStyle.Top;
-            btnVentas.FlatAppearance.BorderSize = 0;
-            btnVentas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnVentas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
-            btnVentas.FlatStyle = FlatStyle.Flat;
-            btnVentas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnVentas.ForeColor = Color.White;
-            btnVentas.ImageAlign = ContentAlignment.MiddleLeft;
-            btnVentas.Location = new Point(0, 40);
-            btnVentas.Name = "btnVentas";
-            btnVentas.Size = new Size(187, 40);
-            btnVentas.TabIndex = 1;
-            btnVentas.Text = "Ventas";
-            btnVentas.TextAlign = ContentAlignment.MiddleLeft;
-            btnVentas.UseVisualStyleBackColor = true;
-            // 
-            // btnReservas
-            // 
-            btnReservas.BackgroundImageLayout = ImageLayout.None;
-            btnReservas.Dock = DockStyle.Top;
-            btnReservas.FlatAppearance.BorderSize = 0;
-            btnReservas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnReservas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
-            btnReservas.FlatStyle = FlatStyle.Flat;
-            btnReservas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnReservas.ForeColor = Color.White;
-            btnReservas.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReservas.Location = new Point(0, 0);
-            btnReservas.Name = "btnReservas";
-            btnReservas.Size = new Size(187, 40);
-            btnReservas.TabIndex = 0;
-            btnReservas.Text = "Reservas";
-            btnReservas.TextAlign = ContentAlignment.MiddleLeft;
-            btnReservas.UseVisualStyleBackColor = true;
-            btnReservas.Click += btnReservas_Click;
-            // 
             // panelHeader
             // 
             panelHeader.BackColor = Color.Transparent;
-            panelHeader.Controls.Add(btnMenu);
-            panelHeader.Controls.Add(lblInfo);
-            panelHeader.Controls.Add(lblSubtitulo);
+            panelHeader.Controls.Add(pictureBox1);
             panelHeader.Controls.Add(lblNombre);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
@@ -238,51 +323,27 @@
             panelHeader.Size = new Size(187, 100);
             panelHeader.TabIndex = 0;
             // 
-            // btnMenu
+            // pictureBox1
             // 
-            btnMenu.FlatAppearance.BorderSize = 0;
-            btnMenu.FlatStyle = FlatStyle.Flat;
-            btnMenu.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnMenu.ForeColor = Color.White;
-            btnMenu.Location = new Point(147, 53);
-            btnMenu.Name = "btnMenu";
-            btnMenu.Size = new Size(40, 40);
-            btnMenu.TabIndex = 3;
-            btnMenu.Text = "≡";
-            btnMenu.UseVisualStyleBackColor = true;
-            // 
-            // lblInfo
-            // 
-            lblInfo.AutoSize = true;
-            lblInfo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblInfo.ForeColor = Color.FromArgb(180, 180, 185);
-            lblInfo.Location = new Point(15, 69);
-            lblInfo.Name = "lblInfo";
-            lblInfo.Size = new Size(118, 15);
-            lblInfo.TabIndex = 2;
-            lblInfo.Text = "Usuario | Caja abierta";
-            // 
-            // lblSubtitulo
-            // 
-            lblSubtitulo.AutoSize = true;
-            lblSubtitulo.Font = new Font("Segoe UI", 10F, FontStyle.Italic);
-            lblSubtitulo.ForeColor = Color.White;
-            lblSubtitulo.Location = new Point(15, 42);
-            lblSubtitulo.Name = "lblSubtitulo";
-            lblSubtitulo.Size = new Size(89, 19);
-            lblSubtitulo.TabIndex = 1;
-            lblSubtitulo.Text = "- CANTINA -";
+            pictureBox1.Image = Properties.Resources.padel_tennis_logo_banner_poster_260nw_1856766739;
+            pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
+            pictureBox1.Location = new Point(12, 9);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(92, 88);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 4;
+            pictureBox1.TabStop = false;
             // 
             // lblNombre
             // 
             lblNombre.AutoSize = true;
             lblNombre.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblNombre.ForeColor = Color.White;
-            lblNombre.Location = new Point(15, 17);
+            lblNombre.Location = new Point(101, 18);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(152, 25);
+            lblNombre.Size = new Size(70, 75);
             lblNombre.TabIndex = 0;
-            lblNombre.Text = "CLUB DE PÁDEL";
+            lblNombre.Text = "CLUB\r\nDE\r\nPÁDEL";
             // 
             // panelContenedor
             // 
@@ -314,16 +375,14 @@
             panelBotones.ResumeLayout(false);
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
         private SplitContainer splitContainer1;
         private Panel panelHeader;
-        private Label lblSubtitulo;
         private Label lblNombre;
-        private Label lblInfo;
-        private Button btnMenu;
         private Panel panelBotones;
         private Button btnReservas;
         private Button btnSalir;
@@ -333,5 +392,9 @@
         private Button btnCaja;
         private Button btnVentas;
         private Panel panelContenedor;
+        private PictureBox pictureBox1;
+        private Button btnUsuarios;
+        private Button btnCanchas;
+        private Button btnCompras;
     }
 }

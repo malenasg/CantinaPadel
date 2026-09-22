@@ -32,6 +32,24 @@ namespace CantinaPadel.Negocio
             return productoDatos.ObtenerPorId(idProducto);
         }
 
+        public DataTable ObtenerProductos()
+        {
+            ProductoDatos datos = new ProductoDatos();
+            return datos.ObtenerProductos();
+        }
+
+        public DataTable ObtenerMarcas()
+        {
+            ProductoDatos datos = new ProductoDatos();
+            return datos.ObtenerMarcas();
+        }
+
+        public DataTable ObtenerCategorias()
+        {
+            ProductoDatos datos = new ProductoDatos();
+            return datos.ObtenerCategorias();
+        }
+
         private void ValidarProducto(Producto producto)
         {
             if (string.IsNullOrWhiteSpace(producto.Nombre))
@@ -86,6 +104,21 @@ namespace CantinaPadel.Negocio
             }
 
             productoDatos.DarBaja(idProducto);
+        }
+
+        public void AumentarPreciosMasivo(decimal porcentaje, string columnaFiltro, int idFiltro)
+        {
+            if (porcentaje <= 0)
+            {
+                throw new Exception("El porcentaje de aumento debe ser mayor a cero.");
+            }
+
+            if (idFiltro <= 0)
+            {
+                throw new Exception("Debe seleccionar a qué categoría, marca o proveedor aplicarle el aumento.");
+            }
+
+            productoDatos.AumentarPreciosMasivo(porcentaje, columnaFiltro, idFiltro);
         }
     }
 }

@@ -117,6 +117,53 @@ namespace CantinaPadel.Datos
             return producto;
         }
 
+        public DataTable ObtenerProductos()
+        {
+            DataTable dt = new DataTable();
+            using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
+            {
+                // Traemos solo los productos activos
+                string query = "SELECT id_producto, nombre FROM productos WHERE estado = 1";
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
+
+                adaptador.Fill(dt);
+            }
+            return dt;
+        }
+
+        // Método para traer las Marcas
+        public DataTable ObtenerMarcas()
+        {
+            DataTable dt = new DataTable();
+            using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
+            {
+                // Ajustá el nombre de la tabla si en tu BD se llama diferente
+                string query = "SELECT id_marca, nombre FROM marcas";
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
+
+                adaptador.Fill(dt);
+            }
+            return dt;
+        }
+
+        // Método para traer las Categorías
+        public DataTable ObtenerCategorias()
+        {
+            DataTable dt = new DataTable();
+            using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
+            {
+                // Ajustá el nombre de la tabla si en tu BD se llama diferente
+                string query = "SELECT id_categoria, nombre FROM categorias";
+                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
+
+                adaptador.Fill(dt);
+            }
+            return dt;
+        }
+
         public void Insertar(Producto producto)
         {
             using (MySqlConnection cn = conexion.CrearConexion())
@@ -220,6 +267,35 @@ namespace CantinaPadel.Datos
                 catch (Exception ex)
                 {
                     throw new Exception("Error al eliminar el producto: " + ex.Message);
+                }
+            }
+        }
+
+        public void AumentarPreciosMasivo(decimal porcentaje, string columnaFiltro, int idFiltro)
+        {
+            using (MySqlConnection cn = conexion.CrearConexion())
+            {
+                try
+                {
+                    // Validamos que el nombre de la columna sea seguro para evitar inyección SQL
+                    if (columnaFiltro != "id_marca" && columnaFiltro != "id_categoria" && columnaFiltro != "id_proveedor")
+                    {
+                        throw new Exception("Filtro no válido.");
+                    }
+
+                    // Calculamos el aumento directo en MySQL: precio * (1 + (porcentaje / 100))
+                    string query = $"UPDATE producto SET precio = precio * (1 + (@porcentaje / 100)) WHERE {columnaFiltro} = @id_filtro";
+
+                    MySqlCommand cmd = new MySqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@porcentaje", porcentaje);
+                    cmd.Parameters.AddWithValue("@id_filtro", idFiltro);
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al actualizar precios: " + ex.Message);
                 }
             }
         }
