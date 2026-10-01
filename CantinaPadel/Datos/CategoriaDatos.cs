@@ -47,5 +47,25 @@ namespace CantinaPadel.Datos
                 }
             }
         }
+
+        // NUEVO MÉTODO: Evita cargar categorías repetidas
+        public bool ExisteNombre(string nombre, int idCategoriaExcluida = 0)
+        {
+            if (string.IsNullOrWhiteSpace(nombre)) return false;
+
+            using (MySqlConnection cn = conexion.CrearConexion())
+            {
+                cn.Open();
+                string query = @"SELECT COUNT(*) FROM categoria 
+                                 WHERE nombre = @nombre AND id_categoria != @id_categoria";
+
+                MySqlCommand cmd = new MySqlCommand(query, cn);
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                cmd.Parameters.AddWithValue("@id_categoria", idCategoriaExcluida);
+
+                int cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+                return cantidad > 0;
+            }
+        }
     }
 }

@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             gbDatos = new GroupBox();
+            mtbTelefono = new MaskedTextBox();
+            mtbCuit = new MaskedTextBox();
             btnCancelar = new Button();
             gbTipo = new GroupBox();
             clbTipoPersona = new CheckedListBox();
@@ -41,19 +43,18 @@
             lblNombre = new Label();
             txtDireccion = new TextBox();
             txtEmail = new TextBox();
-            txtTelefono = new TextBox();
-            txtCuit = new TextBox();
             txtApellido = new TextBox();
             txtNombre = new TextBox();
             panelEmpleado = new Panel();
             lblIngreso = new Label();
             dtpIngreso = new DateTimePicker();
             panelProveedor = new Panel();
+            cmbCondicionFiscal = new ComboBox();
             lblCondicionFiscal = new Label();
             lblRazSoc = new Label();
             txtRazonSocial = new TextBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            cmbCondicionFiscal = new ComboBox();
+            chkActivar = new CheckBox();
             gbDatos.SuspendLayout();
             gbTipo.SuspendLayout();
             panelEmpleado.SuspendLayout();
@@ -63,9 +64,9 @@
             // 
             // gbDatos
             // 
-            gbDatos.Controls.Add(btnCancelar);
+            gbDatos.Controls.Add(mtbTelefono);
+            gbDatos.Controls.Add(mtbCuit);
             gbDatos.Controls.Add(gbTipo);
-            gbDatos.Controls.Add(btnModificar);
             gbDatos.Controls.Add(lblDireccion);
             gbDatos.Controls.Add(lblEmail);
             gbDatos.Controls.Add(lblTelefono);
@@ -74,23 +75,37 @@
             gbDatos.Controls.Add(lblNombre);
             gbDatos.Controls.Add(txtDireccion);
             gbDatos.Controls.Add(txtEmail);
-            gbDatos.Controls.Add(txtTelefono);
-            gbDatos.Controls.Add(txtCuit);
             gbDatos.Controls.Add(txtApellido);
             gbDatos.Controls.Add(txtNombre);
             gbDatos.ForeColor = SystemColors.ControlText;
             gbDatos.Location = new Point(12, 12);
             gbDatos.Name = "gbDatos";
-            gbDatos.Size = new Size(351, 424);
+            gbDatos.Size = new Size(353, 398);
             gbDatos.TabIndex = 7;
             gbDatos.TabStop = false;
             gbDatos.Text = "Datos personales";
             // 
+            // mtbTelefono
+            // 
+            mtbTelefono.Location = new Point(119, 208);
+            mtbTelefono.Mask = "0000-000000";
+            mtbTelefono.Name = "mtbTelefono";
+            mtbTelefono.Size = new Size(219, 23);
+            mtbTelefono.TabIndex = 24;
+            // 
+            // mtbCuit
+            // 
+            mtbCuit.Location = new Point(119, 179);
+            mtbCuit.Mask = "00-00000000-0";
+            mtbCuit.Name = "mtbCuit";
+            mtbCuit.Size = new Size(219, 23);
+            mtbCuit.TabIndex = 1;
+            // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(178, 395);
+            btnCancelar.Location = new Point(283, 416);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(165, 23);
+            btnCancelar.Size = new Size(82, 23);
             btnCancelar.TabIndex = 23;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
@@ -99,9 +114,9 @@
             // gbTipo
             // 
             gbTipo.Controls.Add(clbTipoPersona);
-            gbTipo.Location = new Point(9, 22);
+            gbTipo.Location = new Point(8, 21);
             gbTipo.Name = "gbTipo";
-            gbTipo.Size = new Size(334, 85);
+            gbTipo.Size = new Size(338, 85);
             gbTipo.TabIndex = 8;
             gbTipo.TabStop = false;
             gbTipo.Text = "Tipo de persona";
@@ -110,20 +125,21 @@
             // 
             clbTipoPersona.AllowDrop = true;
             clbTipoPersona.BackColor = SystemColors.Control;
-            clbTipoPersona.BorderStyle = BorderStyle.None;
+            clbTipoPersona.Dock = DockStyle.Top;
             clbTipoPersona.FormattingEnabled = true;
             clbTipoPersona.Items.AddRange(new object[] { "Cliente", "Empleado", "Proveedor" });
-            clbTipoPersona.Location = new Point(11, 23);
+            clbTipoPersona.Location = new Point(3, 19);
             clbTipoPersona.Name = "clbTipoPersona";
-            clbTipoPersona.Size = new Size(120, 54);
+            clbTipoPersona.Size = new Size(332, 58);
             clbTipoPersona.TabIndex = 0;
+            clbTipoPersona.UseTabStops = false;
             clbTipoPersona.ItemCheck += clbTipoPersona_ItemCheck;
             // 
             // btnModificar
             // 
-            btnModificar.Location = new Point(7, 395);
+            btnModificar.Location = new Point(195, 416);
             btnModificar.Name = "btnModificar";
-            btnModificar.Size = new Size(165, 23);
+            btnModificar.Size = new Size(82, 23);
             btnModificar.TabIndex = 22;
             btnModificar.Text = "Guardar";
             btnModificar.UseVisualStyleBackColor = true;
@@ -186,45 +202,35 @@
             // txtDireccion
             // 
             txtDireccion.Location = new Point(119, 266);
+            txtDireccion.MaxLength = 50;
             txtDireccion.Name = "txtDireccion";
-            txtDireccion.Size = new Size(224, 23);
+            txtDireccion.Size = new Size(219, 23);
             txtDireccion.TabIndex = 7;
             // 
             // txtEmail
             // 
             txtEmail.Location = new Point(119, 237);
+            txtEmail.MaxLength = 50;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(224, 23);
+            txtEmail.Size = new Size(219, 23);
             txtEmail.TabIndex = 6;
-            // 
-            // txtTelefono
-            // 
-            txtTelefono.Location = new Point(119, 208);
-            txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(224, 23);
-            txtTelefono.TabIndex = 5;
-            // 
-            // txtCuit
-            // 
-            txtCuit.Location = new Point(119, 179);
-            txtCuit.Name = "txtCuit";
-            txtCuit.Size = new Size(224, 23);
-            txtCuit.TabIndex = 3;
             // 
             // txtApellido
             // 
             txtApellido.Location = new Point(119, 146);
+            txtApellido.MaxLength = 30;
             txtApellido.Name = "txtApellido";
-            txtApellido.Size = new Size(224, 23);
+            txtApellido.Size = new Size(219, 23);
             txtApellido.TabIndex = 1;
             // 
             // txtNombre
             // 
+            txtNombre.Cursor = Cursors.IBeam;
             txtNombre.Location = new Point(119, 117);
+            txtNombre.MaxLength = 30;
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(224, 23);
+            txtNombre.Size = new Size(219, 23);
             txtNombre.TabIndex = 0;
-            txtNombre.TextChanged += txtNombre_TextChanged;
             // 
             // panelEmpleado
             // 
@@ -232,9 +238,8 @@
             panelEmpleado.Controls.Add(dtpIngreso);
             panelEmpleado.Location = new Point(3, 64);
             panelEmpleado.Name = "panelEmpleado";
-            panelEmpleado.Size = new Size(343, 34);
+            panelEmpleado.Size = new Size(382, 34);
             panelEmpleado.TabIndex = 25;
-            panelEmpleado.Paint += panelEmpleado_Paint;
             // 
             // lblIngreso
             // 
@@ -244,28 +249,36 @@
             lblIngreso.Size = new Size(96, 15);
             lblIngreso.TabIndex = 18;
             lblIngreso.Text = "Fecha de ingreso";
-            lblIngreso.Click += lblIngreso_Click;
             // 
             // dtpIngreso
             // 
             dtpIngreso.CustomFormat = "DD/MM/AAAA";
+            dtpIngreso.Format = DateTimePickerFormat.Short;
             dtpIngreso.ImeMode = ImeMode.NoControl;
             dtpIngreso.Location = new Point(116, 3);
             dtpIngreso.Name = "dtpIngreso";
-            dtpIngreso.Size = new Size(224, 23);
+            dtpIngreso.Size = new Size(219, 23);
             dtpIngreso.TabIndex = 17;
             dtpIngreso.Value = new DateTime(2026, 7, 6, 11, 38, 39, 0);
             // 
             // panelProveedor
             // 
+            panelProveedor.Controls.Add(txtRazonSocial);
             panelProveedor.Controls.Add(cmbCondicionFiscal);
             panelProveedor.Controls.Add(lblCondicionFiscal);
             panelProveedor.Controls.Add(lblRazSoc);
-            panelProveedor.Controls.Add(txtRazonSocial);
             panelProveedor.Location = new Point(3, 3);
             panelProveedor.Name = "panelProveedor";
             panelProveedor.Size = new Size(343, 55);
             panelProveedor.TabIndex = 24;
+            // 
+            // cmbCondicionFiscal
+            // 
+            cmbCondicionFiscal.FormattingEnabled = true;
+            cmbCondicionFiscal.Location = new Point(116, 29);
+            cmbCondicionFiscal.Name = "cmbCondicionFiscal";
+            cmbCondicionFiscal.Size = new Size(219, 23);
+            cmbCondicionFiscal.TabIndex = 16;
             // 
             // lblCondicionFiscal
             // 
@@ -288,10 +301,10 @@
             // txtRazonSocial
             // 
             txtRazonSocial.Location = new Point(116, 3);
+            txtRazonSocial.MaxLength = 30;
             txtRazonSocial.Name = "txtRazonSocial";
-            txtRazonSocial.Size = new Size(224, 23);
+            txtRazonSocial.Size = new Size(219, 23);
             txtRazonSocial.TabIndex = 2;
-            txtRazonSocial.TextChanged += txtRazonSocial_TextChanged;
             // 
             // flowLayoutPanel1
             // 
@@ -299,25 +312,29 @@
             flowLayoutPanel1.Controls.Add(panelEmpleado);
             flowLayoutPanel1.Location = new Point(12, 301);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(351, 100);
+            flowLayoutPanel1.Size = new Size(346, 100);
             flowLayoutPanel1.TabIndex = 26;
-            flowLayoutPanel1.Paint += flowLayoutPanel1_Paint;
             // 
-            // cmbCondicionFiscal
+            // chkActivar
             // 
-            cmbCondicionFiscal.FormattingEnabled = true;
-            cmbCondicionFiscal.Location = new Point(116, 29);
-            cmbCondicionFiscal.Name = "cmbCondicionFiscal";
-            cmbCondicionFiscal.Size = new Size(224, 23);
-            cmbCondicionFiscal.TabIndex = 16;
+            chkActivar.AutoSize = true;
+            chkActivar.Location = new Point(20, 418);
+            chkActivar.Name = "chkActivar";
+            chkActivar.Size = new Size(105, 19);
+            chkActivar.TabIndex = 25;
+            chkActivar.Text = "Volver a activar";
+            chkActivar.UseVisualStyleBackColor = true;
             // 
             // FormRegistroPersona
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(375, 448);
+            ClientSize = new Size(375, 449);
+            Controls.Add(chkActivar);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(gbDatos);
+            Controls.Add(btnCancelar);
+            Controls.Add(btnModificar);
             Name = "FormRegistroPersona";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormRegistroPersona";
@@ -331,6 +348,7 @@
             panelProveedor.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -351,8 +369,6 @@
         private Label lblNombre;
         private TextBox txtDireccion;
         private TextBox txtEmail;
-        private TextBox txtTelefono;
-        private TextBox txtCuit;
         private TextBox txtRazonSocial;
         private TextBox txtApellido;
         private TextBox txtNombre;
@@ -361,5 +377,8 @@
         private Label lblCondicionFiscal;
         private FlowLayoutPanel flowLayoutPanel1;
         private ComboBox cmbCondicionFiscal;
+        private MaskedTextBox mtbTelefono;
+        private MaskedTextBox mtbCuit;
+        private CheckBox chkActivar;
     }
 }

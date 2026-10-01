@@ -98,7 +98,6 @@
             cmbElemento.Name = "cmbElemento";
             cmbElemento.Size = new Size(281, 28);
             cmbElemento.TabIndex = 5;
-            cmbElemento.SelectedIndexChanged += cmbElemento_SelectedIndexChanged;
             // 
             // lblPorcentaje
             // 

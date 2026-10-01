@@ -54,49 +54,75 @@ namespace CantinaPadel.Negocio
         // Permite validar los datos de una persona antes de insertarla o modificarla
         private void ValidarPersona(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor)
         {
-            if (string.IsNullOrWhiteSpace(persona.Nombre))
-            {
-                throw new Exception("Debe ingresar el nombre de la persona.");
-            }
-
+            // 1. VALIDACIÓN DE ROLES
             if (!esCliente && !esEmpleado && !esProveedor)
             {
-                throw new Exception("Debe seleccionar al menos un tipo: cliente, empleado o proveedor.");
+                throw new Exception("Debe seleccionar al menos un rol: cliente, empleado o proveedor.");
             }
 
-            if (esEmpleado && persona.FechaIngreso == null)
+            // 2. VALIDACIONES PARA EMPLEADOS Y CLIENTES (Personas Físicas)
+            if (esEmpleado || esCliente)
             {
-                throw new Exception("Debe ingresar la fecha de ingreso del empleado.");
+                if (string.IsNullOrWhiteSpace(persona.Nombre))
+                    throw new Exception("El nombre es obligatorio.");
+
+                if (string.IsNullOrWhiteSpace(persona.Apellido)) // Asumiendo que tu entidad tiene propiedad Apellido
+                    throw new Exception("El apellido es obligatorio.");
+
+                // Validar CUIT (Típicamente entre 11 números en Argentina)
+                if (string.IsNullOrWhiteSpace(persona.Cuit)) // Asumiendo propiedad Cuit
+                    throw new Exception("El CUIT es obligatorio.");
+                else if (persona.Cuit.Length < 11)
+                    throw new Exception("El CUIT ingresado no es válido.");
+
+                if (esEmpleado && persona.FechaIngreso == null)
+                    throw new Exception("Debe ingresar la fecha de ingreso del empleado.");
             }
 
+            // 3. VALIDACIONES PARA PROVEEDORES (Personas Jurídicas/Empresas)
             if (esProveedor)
             {
                 if (string.IsNullOrWhiteSpace(persona.RazonSocial))
                     throw new Exception("La Razón Social es obligatoria para los proveedores.");
-                
-                if (string.IsNullOrWhiteSpace(persona.CondicionFiscal))
-                    throw new Exception("Debe seleccionar una Condición Fiscal para el proveedor.");
-            }
 
-            if (!string.IsNullOrWhiteSpace(persona.Cuit) && persona.Cuit.Length < 10)
-            {
-                throw new Exception("El CUIT/CUIL ingresado no es válido.");
-            }
-
-            if (!string.IsNullOrWhiteSpace(persona.Telefono))
-            {
-                foreach (char caracter in persona.Telefono)
+                // COMPLETANDO LA CONDICIÓN FISCAL:
+                // Evitamos que guarde si está vacío o si dejaron la opción por defecto del ComboBox
+                if (string.IsNullOrWhiteSpace(persona.CondicionFiscal) ||
+                    persona.CondicionFiscal.ToLower() == "seleccione" ||
+                    persona.CondicionFiscal.ToLower() == "seleccione...")
                 {
-                    if (!char.IsDigit(caracter) && caracter != '-' && caracter != ' ')
-                    {
-                        throw new Exception("El teléfono solo puede contener números, espacios o guiones.");
-                    }
+                    throw new Exception("Debe seleccionar una condición fiscal válida para el proveedor.");
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(persona.Email) && !persona.Email.Contains("@"))
+            // 4. VALIDACIÓN DE CUIL/CUIT (Enmascarado)
+            if (!string.IsNullOrWhiteSpace(persona.Cuit))
             {
-                throw new Exception("El email ingresado no es válido.");
+                string cuitLimpio = persona.Cuit.Replace("-", "").Replace(" ", "");
+                if (cuitLimpio.Length > 0 && cuitLimpio.Length < 11)
+                {
+                    throw new Exception("El CUIT/CUIL está incompleto. Debe tener exactamente 11 números.");
+                }
+            }
+
+            // 5. VALIDACIÓN DE TELÉFONO (Enmascarado)
+            if (!string.IsNullOrWhiteSpace(persona.Telefono))
+            {
+                string telLimpio = persona.Telefono.Replace("-", "").Replace(" ", "").Replace("(", "").Replace(")", "");
+                if (telLimpio.Length > 0 && telLimpio.Length < 10)
+                {
+                    throw new Exception("El número de teléfono está incompleto. Debe tener al menos 10 dígitos.");
+                }
+            }
+
+            // 6. VALIDACIÓN DE EMAIL
+            if (!string.IsNullOrWhiteSpace(persona.Email))
+            {
+                // Forma más segura de validar que tenga un formato real (ej: texto@texto.com)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(persona.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    throw new Exception("El formato del correo electrónico no es válido.");
+                }
             }
         }
 
@@ -104,6 +130,12 @@ namespace CantinaPadel.Negocio
         public int Insertar(Persona persona, bool esCliente, bool esEmpleado, bool esProveedor)
         {
             ValidarPersona(persona, esCliente, esEmpleado, esProveedor);
+
+            if (personaDatos.ExisteCuit(persona.Cuit))
+            {
+                throw new Exception("Error: El CUIT/CUIL ingresado ya se encuentra registrado en el sistema.");
+            }
+
             return personaDatos.Insertar(persona, esCliente, esEmpleado, esProveedor);
         }
 
@@ -116,6 +148,12 @@ namespace CantinaPadel.Negocio
             }
 
             ValidarPersona(persona, esCliente, esEmpleado, esProveedor);
+
+            if (personaDatos.ExisteCuit(persona.Cuit, persona.IdPersona))
+            {
+                throw new Exception("Error: El CUIT/CUIL ingresado ya pertenece a otra persona registrada.");
+            }
+
             personaDatos.Modificar(persona, esCliente, esEmpleado, esProveedor);
         }
 
@@ -128,6 +166,16 @@ namespace CantinaPadel.Negocio
             }
 
             personaDatos.DarBaja(idPersona);
+        }
+
+        public void DarAlta(int idPersona)
+        {
+            if (idPersona <= 0)
+            {
+                throw new Exception("Debe seleccionar una persona válida para reactivar.");
+            }
+
+            personaDatos.DarAlta(idPersona);
         }
     }
 }

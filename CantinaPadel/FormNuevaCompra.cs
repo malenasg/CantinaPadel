@@ -66,7 +66,7 @@ namespace CantinaPadel
                 // Creamos un renglón nuevo (Detalle)
                 DetalleCompra detalle = new DetalleCompra();
                 detalle.IdProducto = Convert.ToInt32(cmbProducto.SelectedValue);
-
+                detalle.NombreProducto = cmbProducto.Text;
                 // Guardamos el nombre solo para mostrarlo en la grilla visualmente
                 // (Si tu clase DetalleCompra no tiene la propiedad NombreProducto, podés omitir esta línea)
                 // detalle.NombreProducto = cmbProducto.Text;

@@ -97,12 +97,12 @@ namespace CantinaPadel.Datos
                             producto.IdProducto = Convert.ToInt32(dr["id_producto"]);
                             producto.Nombre = dr["nombre"].ToString();
                             producto.Codigo = dr["codigo"] != DBNull.Value ? dr["codigo"].ToString() : "";
-                            producto.Descripcion = dr["descripcion"] != DBNull.Value ? dr["descripcion"].ToString() : "";
                             producto.Stock = dr["stock"] != DBNull.Value ? Convert.ToInt32(dr["stock"]) : 0;
                             producto.StockMinimo = dr["stock_minimo"] != DBNull.Value ? Convert.ToInt32(dr["stock_minimo"]) : 0;
                             producto.PrecioCompra = dr["precio_compra"] != DBNull.Value ? Convert.ToDecimal(dr["precio_compra"]) : 0;
+                            producto.PorcentajeGanancia = dr["porcentaje_ganancia"] != DBNull.Value ? Convert.ToDecimal(dr["porcentaje_ganancia"]) : 0;
                             producto.PrecioVenta = Convert.ToDecimal(dr["precio_venta"]);
-
+                            producto.Activo = Convert.ToBoolean(dr["activo"]);
                             producto.IdCategoria = dr["id_categoria"] != DBNull.Value ? Convert.ToInt32(dr["id_categoria"]) : (int?)null;
                             producto.IdMarca = dr["id_marca"] != DBNull.Value ? Convert.ToInt32(dr["id_marca"]) : (int?)null;
                             producto.IdProveedor = dr["id_proveedor"] != DBNull.Value ? Convert.ToInt32(dr["id_proveedor"]) : (int?)null;
@@ -120,11 +120,11 @@ namespace CantinaPadel.Datos
         public DataTable ObtenerProductos()
         {
             DataTable dt = new DataTable();
-            using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
+            using (MySqlConnection cn = conexion.CrearConexion())
             {
                 // Traemos solo los productos activos
                 string query = "SELECT id_producto, nombre FROM producto WHERE activo = 1";
-                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlCommand comando = new MySqlCommand(query, cn);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
 
                 adaptador.Fill(dt);
@@ -136,11 +136,11 @@ namespace CantinaPadel.Datos
         public DataTable ObtenerMarcas()
         {
             DataTable dt = new DataTable();
-            using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
+            using (MySqlConnection cn = conexion.CrearConexion())
             {
                 // Ajustá el nombre de la tabla si en tu BD se llama diferente
                 string query = "SELECT id_marca, nombre FROM marca";
-                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlCommand comando = new MySqlCommand(query, cn);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
 
                 adaptador.Fill(dt);
@@ -152,11 +152,11 @@ namespace CantinaPadel.Datos
         public DataTable ObtenerCategorias()
         {
             DataTable dt = new DataTable();
-            using (MySqlConnection conexion = new MySqlConnection(Conexion.cadena))
+            using (MySqlConnection cn = conexion.CrearConexion())
             {
                 // Ajustá el nombre de la tabla si en tu BD se llama diferente
                 string query = "SELECT id_categoria, nombre FROM categoria";
-                MySqlCommand comando = new MySqlCommand(query, conexion);
+                MySqlCommand comando = new MySqlCommand(query, cn);
                 MySqlDataAdapter adaptador = new MySqlDataAdapter(comando);
 
                 adaptador.Fill(dt);
@@ -171,16 +171,16 @@ namespace CantinaPadel.Datos
                 try
                 {
                     string consulta = @"INSERT INTO producto 
-                                        (nombre, descripcion, stock, stock_minimo, precio_compra, precio_venta, codigo, id_categoria, id_marca, id_proveedor, activo) 
+                                        (nombre, stock, stock_minimo, precio_compra, precio_venta, codigo, id_categoria, id_marca, id_proveedor, activo) 
                                         VALUES 
-                                        (@nombre, @descripcion, @stock, @stock_minimo, @precio_compra, @precio_venta, @codigo, @id_categoria, @id_marca, @id_proveedor, TRUE)";
+                                        (@nombre, @stock, @stock_minimo, @precio_compra, @precio_venta, @codigo, @id_categoria, @id_marca, @id_proveedor, TRUE)";
 
                     MySqlCommand cmd = new MySqlCommand(consulta, cn);
                     cmd.Parameters.AddWithValue("@nombre", producto.Nombre);
-                    cmd.Parameters.AddWithValue("@descripcion", string.IsNullOrEmpty(producto.Descripcion) ? (object)DBNull.Value : producto.Descripcion);
                     cmd.Parameters.AddWithValue("@stock", producto.Stock);
                     cmd.Parameters.AddWithValue("@stock_minimo", producto.StockMinimo);
                     cmd.Parameters.AddWithValue("@precio_compra", producto.PrecioCompra);
+                    cmd.Parameters.AddWithValue("@porcentaje_ganancia", producto.PorcentajeGanancia);
                     cmd.Parameters.AddWithValue("@precio_venta", producto.PrecioVenta);
                     cmd.Parameters.AddWithValue("@codigo", string.IsNullOrEmpty(producto.Codigo) ? (object)DBNull.Value : producto.Codigo);
 
@@ -206,10 +206,10 @@ namespace CantinaPadel.Datos
                 {
                     string consulta = @"UPDATE producto SET 
                                         nombre = @nombre, 
-                                        descripcion = @descripcion, 
                                         stock = @stock, 
                                         stock_minimo = @stock_minimo, 
                                         precio_compra = @precio_compra, 
+                                        porcentaje_ganancia = @porcentaje_ganancia, -- ¡ACÁ ESTABA EL FALTANTE!
                                         precio_venta = @precio_venta, 
                                         codigo = @codigo, 
                                         id_categoria = @id_categoria, 
@@ -220,10 +220,10 @@ namespace CantinaPadel.Datos
                     MySqlCommand cmd = new MySqlCommand(consulta, cn);
                     cmd.Parameters.AddWithValue("@id_producto", producto.IdProducto);
                     cmd.Parameters.AddWithValue("@nombre", producto.Nombre);
-                    cmd.Parameters.AddWithValue("@descripcion", string.IsNullOrEmpty(producto.Descripcion) ? (object)DBNull.Value : producto.Descripcion);
                     cmd.Parameters.AddWithValue("@stock", producto.Stock);
                     cmd.Parameters.AddWithValue("@stock_minimo", producto.StockMinimo);
                     cmd.Parameters.AddWithValue("@precio_compra", producto.PrecioCompra);
+                    cmd.Parameters.AddWithValue("@porcentaje_ganancia", producto.PorcentajeGanancia);
                     cmd.Parameters.AddWithValue("@precio_venta", producto.PrecioVenta);
                     cmd.Parameters.AddWithValue("@codigo", string.IsNullOrEmpty(producto.Codigo) ? (object)DBNull.Value : producto.Codigo);
 
@@ -247,27 +247,55 @@ namespace CantinaPadel.Datos
             {
                 try
                 {
-                    // Cambiamos el UPDATE por un DELETE físico
-                    string consulta = @"DELETE FROM producto WHERE id_producto = @id_producto";
+                    string consulta = @"UPDATE producto SET activo = 0 WHERE id_producto = @id_producto";
                     MySqlCommand cmd = new MySqlCommand(consulta, cn);
                     cmd.Parameters.AddWithValue("@id_producto", idProducto);
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
                 }
-                catch (MySqlException ex)
+                catch (Exception ex)
                 {
-                    // El error 1451 ocurre si el producto está en detalle_venta o detalle_compra
-                    if (ex.Number == 1451)
-                    {
-                        throw new Exception("No se puede eliminar el producto físicamente porque ya tiene ventas o compras asociadas en el sistema.");
-                    }
-                    throw new Exception("Error de base de datos al eliminar el producto: " + ex.Message);
+                    throw new Exception("Error al dar de baja el producto: " + ex.Message);
+                }
+            }
+        }
+        public void DarAlta(int idProducto)
+        {
+            using (MySqlConnection cn = conexion.CrearConexion())
+            {
+                try
+                {
+                    string consulta = @"UPDATE producto SET activo = 1 WHERE id_producto = @id_producto";
+                    MySqlCommand cmd = new MySqlCommand(consulta, cn);
+                    cmd.Parameters.AddWithValue("@id_producto", idProducto);
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error al eliminar el producto: " + ex.Message);
+                    throw new Exception("Error al reactivar el producto: " + ex.Message);
                 }
+            }
+        }
+
+        public bool ExisteCodigo(string codigo, int idProductoExcluido = 0)
+        {
+            if (string.IsNullOrWhiteSpace(codigo)) return false;
+
+            using (MySqlConnection cn = conexion.CrearConexion())
+            {
+                cn.Open();
+                string query = @"SELECT COUNT(*) FROM producto 
+                         WHERE codigo = @codigo AND id_producto != @id_producto";
+
+                MySqlCommand cmd = new MySqlCommand(query, cn);
+                cmd.Parameters.AddWithValue("@codigo", codigo);
+                cmd.Parameters.AddWithValue("@id_producto", idProductoExcluido);
+
+                int cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+                return cantidad > 0;
             }
         }
 
@@ -277,14 +305,23 @@ namespace CantinaPadel.Datos
             {
                 try
                 {
-                    // Validamos que el nombre de la columna sea seguro para evitar inyección SQL
-                    if (columnaFiltro != "id_marca" && columnaFiltro != "id_categoria" && columnaFiltro != "id_proveedor")
+                    // 1. Validamos que el filtro sea seguro. 
+                    // (Agregué 'id_producto' para cumplir el requerimiento de aumento por unidad/producto individual)
+                    if (columnaFiltro != "id_marca" &&
+                        columnaFiltro != "id_categoria" &&
+                        columnaFiltro != "id_proveedor" &&
+                        columnaFiltro != "id_producto")
                     {
-                        throw new Exception("Filtro no válido.");
+                        throw new Exception("Filtro de aumento no válido.");
                     }
 
-                    // Calculamos el aumento directo en MySQL: precio * (1 + (porcentaje / 100))
-                    string query = $"UPDATE producto SET precio_compra = precio_compra * (1 + (@porcentaje / 100)) WHERE {columnaFiltro} = @id_filtro";
+                    // 2. La magia en SQL: 
+                    // - Primero sube el precio de compra según el porcentaje ingresado.
+                    // - Segundo, usa ese NUEVO precio de compra para recalcular el precio de venta usando el margen de ganancia de cada producto.
+                    string query = $@"UPDATE producto 
+                              SET precio_compra = precio_compra * (1 + (@porcentaje / 100)),
+                                  precio_venta = precio_compra + ((precio_compra * porcentaje_ganancia) / 100)
+                              WHERE {columnaFiltro} = @id_filtro AND activo = 1";
 
                     MySqlCommand cmd = new MySqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@porcentaje", porcentaje);
@@ -295,7 +332,7 @@ namespace CantinaPadel.Datos
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error al actualizar precios: " + ex.Message);
+                    throw new Exception("Error al actualizar precios en la base de datos: " + ex.Message);
                 }
             }
         }

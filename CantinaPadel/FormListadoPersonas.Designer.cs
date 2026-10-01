@@ -32,7 +32,6 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             dgvPersonas = new DataGridView();
             btnNuevo = new Button();
-            btnActualizar = new Button();
             panelPrincipal = new Panel();
             panelBotones = new Panel();
             btnModificar = new Button();
@@ -83,24 +82,13 @@
             // btnNuevo
             // 
             btnNuevo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnNuevo.Location = new Point(464, 7);
+            btnNuevo.Location = new Point(548, 7);
             btnNuevo.Name = "btnNuevo";
             btnNuevo.Size = new Size(80, 23);
             btnNuevo.TabIndex = 25;
             btnNuevo.Text = "Nuevo";
             btnNuevo.UseVisualStyleBackColor = true;
             btnNuevo.Click += btnNuevo_Click;
-            // 
-            // btnActualizar
-            // 
-            btnActualizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnActualizar.Location = new Point(722, 7);
-            btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(80, 23);
-            btnActualizar.TabIndex = 23;
-            btnActualizar.Text = "Actualizar";
-            btnActualizar.UseVisualStyleBackColor = true;
-            btnActualizar.Click += btnActualizar_Click;
             // 
             // panelPrincipal
             // 
@@ -120,7 +108,6 @@
             panelBotones.Controls.Add(btnModificar);
             panelBotones.Controls.Add(btnBaja);
             panelBotones.Controls.Add(btnNuevo);
-            panelBotones.Controls.Add(btnActualizar);
             panelBotones.Controls.Add(txtBuscar);
             panelBotones.Dock = DockStyle.Top;
             panelBotones.Location = new Point(0, 81);
@@ -131,7 +118,7 @@
             // btnModificar
             // 
             btnModificar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnModificar.Location = new Point(550, 7);
+            btnModificar.Location = new Point(634, 7);
             btnModificar.Name = "btnModificar";
             btnModificar.Size = new Size(80, 23);
             btnModificar.TabIndex = 26;
@@ -142,7 +129,7 @@
             // btnBaja
             // 
             btnBaja.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnBaja.Location = new Point(636, 7);
+            btnBaja.Location = new Point(720, 7);
             btnBaja.Name = "btnBaja";
             btnBaja.Size = new Size(80, 23);
             btnBaja.TabIndex = 27;
@@ -153,9 +140,11 @@
             // txtBuscar
             // 
             txtBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtBuscar.BorderStyle = BorderStyle.FixedSingle;
+            txtBuscar.ForeColor = SystemColors.WindowText;
             txtBuscar.Location = new Point(10, 7);
             txtBuscar.Name = "txtBuscar";
-            txtBuscar.Size = new Size(448, 23);
+            txtBuscar.Size = new Size(532, 23);
             txtBuscar.TabIndex = 24;
             txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
@@ -203,7 +192,6 @@
 
         private DataGridView dgvPersonas;
         private Button btnNuevo;
-        private Button btnActualizar;
         private Panel panelPrincipal;
         private Panel panelSuperior;
         private Panel panelBotones;

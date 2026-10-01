@@ -21,7 +21,6 @@ namespace CantinaPadel
 
             // Deshabilitamos los botones hasta que el usuario haga clic en un producto
             btnModificar.Enabled = false;
-            btnBaja.Enabled = false;
         }
 
         private void CargarProductos()
@@ -29,6 +28,7 @@ namespace CantinaPadel
             try
             {
                 dgvProductos.DataSource = productoNegocio.Actualizar();
+                dgvProductos.Columns["ID"].Visible = false;
             }
             catch (Exception ex)
             {
@@ -46,7 +46,6 @@ namespace CantinaPadel
                 // Reseteamos la selección
                 idProductoSeleccionado = 0;
                 btnModificar.Enabled = false;
-                btnBaja.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -62,7 +61,6 @@ namespace CantinaPadel
             idProductoSeleccionado = Convert.ToInt32(dgvProductos.Rows[e.RowIndex].Cells["ID"].Value);
 
             btnModificar.Enabled = true;
-            btnBaja.Enabled = true;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -85,33 +83,14 @@ namespace CantinaPadel
 
                 idProductoSeleccionado = 0;
                 btnModificar.Enabled = false;
-                btnBaja.Enabled = false;
             }
         }
 
-        private void btnBaja_Click(object sender, EventArgs e)
+
+        private void btnAumentar_Click(object sender, EventArgs e)
         {
-            if (idProductoSeleccionado == 0) return;
-
-            DialogResult respuesta = MessageBox.Show("¿Está seguro que desea dar de baja este producto?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (respuesta == DialogResult.Yes)
-            {
-                try
-                {
-                    productoNegocio.DarBaja(idProductoSeleccionado);
-                    MessageBox.Show("Producto dado de baja correctamente.");
-                    CargarProductos();
-
-                    idProductoSeleccionado = 0;
-                    btnModificar.Enabled = false;
-                    btnBaja.Enabled = false;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+            FormAumentos ventanaAumentos = new FormAumentos();
+            ventanaAumentos.ShowDialog();
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)

@@ -13,12 +13,19 @@ namespace CantinaPadel.Negocio
         {
             return categoriaDatos.ObtenerTodas();
         }
+
         public void Insertar(Categoria categoria)
         {
             if (string.IsNullOrWhiteSpace(categoria.Nombre))
             {
                 throw new Exception("El nombre de la categoría es obligatorio.");
             }
+
+            if (categoriaDatos.ExisteNombre(categoria.Nombre))
+            {
+                throw new Exception("Error: Ya existe una categoría registrada con ese nombre.");
+            }
+
             categoriaDatos.Insertar(categoria);
         }
     }

@@ -46,5 +46,24 @@ namespace CantinaPadel.Datos
                 }
             }
         }
+
+        public bool ExisteNombre(string nombre, int idMarcaExcluida = 0)
+        {
+            if (string.IsNullOrWhiteSpace(nombre)) return false;
+
+            using (MySqlConnection cn = conexion.CrearConexion())
+            {
+                cn.Open();
+
+                string query = @"SELECT COUNT(*) FROM marca WHERE nombre = @nombre AND id_marca != @id_marca";
+
+                MySqlCommand cmd = new MySqlCommand(query, cn);
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                cmd.Parameters.AddWithValue("@id_marca", idMarcaExcluida);
+
+                int cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+                return cantidad > 0;
+            }
+        }
     }
 }

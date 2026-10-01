@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using CantinaPadel.Entidades;
 using CantinaPadel.Negocio;
+using ZXing;
 
 namespace CantinaPadel
 {
@@ -11,7 +12,7 @@ namespace CantinaPadel
         ProductoNegocio productoNegocio = new ProductoNegocio();
         CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
         MarcaNegocio marcaNegocio = new MarcaNegocio();
-        // Si tenés ProveedorNegocio, lo instanciás acá también.
+        PersonaNegocio personaNegocio = new PersonaNegocio();
 
         int idProducto = 0;
 
@@ -33,11 +34,15 @@ namespace CantinaPadel
             if (idProducto > 0)
             {
                 btnGuardar.Text = "Modificar";
+                txtStockActual.ReadOnly = true;
+                btnAlta.Visible = true;
                 CargarDatosProducto();
             }
             else
             {
                 btnGuardar.Text = "Guardar";
+                txtStockActual.ReadOnly = false;
+                btnAlta.Visible = false;
             }
         }
 
@@ -47,7 +52,6 @@ namespace CantinaPadel
             {
                 cmbCategoria.DataSource = null;
                 cmbCategoria.Items.Clear();
-
                 cmbCategoria.DataSource = categoriaNegocio.ObtenerTodas();
                 cmbCategoria.DisplayMember = "nombre";
                 cmbCategoria.ValueMember = "id_categoria";
@@ -55,16 +59,11 @@ namespace CantinaPadel
 
                 cmbMarca.DataSource = null;
                 cmbMarca.Items.Clear();
-
                 cmbMarca.DataSource = marcaNegocio.ObtenerTodas();
                 cmbMarca.DisplayMember = "nombre";
                 cmbMarca.ValueMember = "id_marca";
                 cmbMarca.SelectedIndex = -1;
 
-                // cmbProveedor.DataSource = proveedorNegocio.ObtenerTodosActivos();
-                // cmbProveedor.DisplayMember = "razon_social";
-                // cmbProveedor.ValueMember = "id_proveedor";
-                // cmbProveedor.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -80,9 +79,8 @@ namespace CantinaPadel
 
                 txtCodigo.Text = producto.Codigo;
                 txtNombre.Text = producto.Nombre;
-                txtDescripcion.Text = producto.Descripcion;
-
                 txtPC.Text = producto.PrecioCompra.ToString();
+                txtPorcentaje.Text = producto.PorcentajeGanancia.ToString();
                 txtPV.Text = producto.PrecioVenta.ToString();
                 txtStockActual.Text = producto.Stock.ToString();
                 txtStockMinimo.Text = producto.StockMinimo.ToString();
@@ -93,8 +91,18 @@ namespace CantinaPadel
                 if (producto.IdMarca.HasValue)
                     cmbMarca.SelectedValue = producto.IdMarca.Value;
 
-                // if (producto.IdProveedor.HasValue)
-                //     cmbProveedor.SelectedValue = producto.IdProveedor.Value;
+                if (producto.Activo)
+                {
+                    btnAlta.Text = "Dar de Baja";
+                    btnAlta.BackColor = System.Drawing.Color.Maroon; // Bordó para baja
+                    btnAlta.ForeColor = System.Drawing.Color.White;
+                }
+                else
+                {
+                    btnAlta.Text = "Dar de alta";
+                    btnAlta.BackColor = System.Drawing.Color.Black; // Negro para alta
+                    btnAlta.ForeColor = System.Drawing.Color.White;
+                }
             }
             catch (Exception ex)
             {
@@ -104,6 +112,28 @@ namespace CantinaPadel
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            // --- VALIDACIONES VISUALES ---
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MessageBox.Show("El nombre del producto no puede estar vacío.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNombre.Focus();
+                return;
+            }
+
+            if (cmbCategoria.SelectedIndex == -1)
+            {
+                MessageBox.Show("Debe seleccionar una categoría.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbCategoria.Focus();
+                return;
+            }
+
+            if (cmbMarca.SelectedIndex == -1)
+            {
+                MessageBox.Show("Debe seleccionar una marca.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbMarca.Focus();
+                return;
+            }
+
             try
             {
                 Producto producto = new Producto();
@@ -111,26 +141,25 @@ namespace CantinaPadel
                 producto.IdProducto = idProducto;
                 producto.Codigo = txtCodigo.Text.Trim();
                 producto.Nombre = txtNombre.Text.Trim();
-                producto.Descripcion = txtDescripcion.Text.Trim();
 
                 producto.PrecioCompra = string.IsNullOrWhiteSpace(txtPC.Text) ? 0 : Convert.ToDecimal(txtPC.Text);
+                producto.PorcentajeGanancia = string.IsNullOrWhiteSpace(txtPorcentaje.Text) ? 0 : Convert.ToDecimal(txtPorcentaje.Text);
                 producto.PrecioVenta = string.IsNullOrWhiteSpace(txtPV.Text) ? 0 : Convert.ToDecimal(txtPV.Text);
                 producto.Stock = string.IsNullOrWhiteSpace(txtStockActual.Text) ? 0 : Convert.ToInt32(txtStockActual.Text);
                 producto.StockMinimo = string.IsNullOrWhiteSpace(txtStockMinimo.Text) ? 0 : Convert.ToInt32(txtStockMinimo.Text);
 
-                producto.IdCategoria = cmbCategoria.SelectedValue != null ? Convert.ToInt32(cmbCategoria.SelectedValue) : (int?)null;
-                producto.IdMarca = cmbMarca.SelectedValue != null ? Convert.ToInt32(cmbMarca.SelectedValue) : (int?)null;
-                // producto.IdProveedor = cmbProveedor.SelectedValue != null ? Convert.ToInt32(cmbProveedor.SelectedValue) : (int?)null;
+                producto.IdCategoria = Convert.ToInt32(cmbCategoria.SelectedValue);
+                producto.IdMarca = Convert.ToInt32(cmbMarca.SelectedValue);
 
                 if (idProducto == 0)
                 {
                     productoNegocio.Insertar(producto);
-                    MessageBox.Show("Producto guardado correctamente.");
+                    MessageBox.Show("Producto guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     productoNegocio.Modificar(producto);
-                    MessageBox.Show("Producto modificado correctamente.");
+                    MessageBox.Show("Producto modificado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 this.DialogResult = DialogResult.OK;
@@ -142,26 +171,47 @@ namespace CantinaPadel
             }
         }
 
+        private void CalcularPrecioEnVivo()
+        {
+            try
+            {
+                decimal costo = string.IsNullOrWhiteSpace(txtPC.Text) ? 0 : Convert.ToDecimal(txtPC.Text);
+                decimal porcentaje = string.IsNullOrWhiteSpace(txtPorcentaje.Text) ? 0 : Convert.ToDecimal(txtPorcentaje.Text);
+                decimal ganancia = (costo * porcentaje) / 100;
+                decimal precioVentaFinal = costo + ganancia;
+
+                txtPV.Text = Math.Round(precioVentaFinal, 2).ToString();
+            }
+            catch { }
+        }
+
+        private void txtPC_TextChanged(object sender, EventArgs e)
+        {
+            CalcularPrecioEnVivo();
+        }
+
+        private void txtPorcentaje_TextChanged(object sender, EventArgs e)
+        {
+            CalcularPrecioEnVivo();
+        }
+
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        // Solo permitir números en Precios (admite la coma decimal)
         private void ValidarIngresoDecimal(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
             {
                 e.Handled = true;
             }
-            // Solo permite una coma
             if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
             {
                 e.Handled = true;
             }
         }
 
-        // Solo permitir números enteros en Stock
         private void ValidarIngresoEntero(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
@@ -185,6 +235,69 @@ namespace CantinaPadel
             if (form.ShowDialog() == DialogResult.OK)
             {
                 CargarCombos();
+            }
+        }
+
+        private void txtCodigo_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(txtCodigo.Text))
+                {
+                    var writer = new ZXing.Windows.Compatibility.BarcodeWriter()
+                    {
+                        Format = ZXing.BarcodeFormat.CODE_128
+                    };
+
+                    picCodigoBarra.Image = writer.Write(txtCodigo.Text);
+                }
+                else
+                {
+                    picCodigoBarra.Image = null;
+                }
+            }
+            catch
+            {
+                picCodigoBarra.Image = null;
+            }
+        }
+
+        private void btnAlta_Click(object sender, EventArgs e)
+        {
+            if (idProducto > 0)
+            {
+                try
+                {
+                    // Leemos qué dice el botón para saber qué acción ejecutar
+                    if (btnAlta.Text == "Dar de Baja")
+                    {
+                        DialogResult respuesta = MessageBox.Show("¿Está seguro de que desea dar de baja este producto?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                        if (respuesta == DialogResult.Yes)
+                        {
+                            productoNegocio.DarBaja(idProducto);
+                            MessageBox.Show("Producto dado de baja correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK; // Le avisa a la grilla que se actualice
+                            this.Close(); // Cierra el formulario
+                        }
+                    }
+                    else
+                    {
+                        DialogResult respuesta = MessageBox.Show("¿Desea volver a dar de alta este producto?", "Confirmar Reactivación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (respuesta == DialogResult.Yes)
+                        {
+                            productoNegocio.DarAlta(idProducto);
+                            MessageBox.Show("Producto dado de alta con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK;
+                            this.Close();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

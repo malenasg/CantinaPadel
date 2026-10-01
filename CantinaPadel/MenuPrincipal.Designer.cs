@@ -82,7 +82,7 @@
             // panelBotones
             // 
             panelBotones.AutoScroll = true;
-            panelBotones.BackColor = Color.Transparent;
+            panelBotones.BackColor = Color.FromArgb(64, 0, 0);
             panelBotones.Controls.Add(btnUsuarios);
             panelBotones.Controls.Add(btnReportes);
             panelBotones.Controls.Add(btnCanchas);
@@ -103,8 +103,8 @@
             // 
             btnUsuarios.Dock = DockStyle.Top;
             btnUsuarios.FlatAppearance.BorderSize = 0;
-            btnUsuarios.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnUsuarios.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnUsuarios.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnUsuarios.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnUsuarios.FlatStyle = FlatStyle.Flat;
             btnUsuarios.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnUsuarios.ForeColor = Color.White;
@@ -124,8 +124,8 @@
             // 
             btnReportes.Dock = DockStyle.Top;
             btnReportes.FlatAppearance.BorderSize = 0;
-            btnReportes.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnReportes.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnReportes.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnReportes.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnReportes.FlatStyle = FlatStyle.Flat;
             btnReportes.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReportes.ForeColor = Color.White;
@@ -145,8 +145,8 @@
             // 
             btnCanchas.Dock = DockStyle.Top;
             btnCanchas.FlatAppearance.BorderSize = 0;
-            btnCanchas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnCanchas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnCanchas.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnCanchas.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnCanchas.FlatStyle = FlatStyle.Flat;
             btnCanchas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCanchas.ForeColor = Color.White;
@@ -166,8 +166,8 @@
             // 
             btnPersonas.Dock = DockStyle.Top;
             btnPersonas.FlatAppearance.BorderSize = 0;
-            btnPersonas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnPersonas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnPersonas.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnPersonas.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnPersonas.FlatStyle = FlatStyle.Flat;
             btnPersonas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnPersonas.ForeColor = Color.White;
@@ -188,8 +188,8 @@
             // 
             btnCompras.Dock = DockStyle.Top;
             btnCompras.FlatAppearance.BorderSize = 0;
-            btnCompras.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnCompras.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnCompras.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnCompras.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnCompras.FlatStyle = FlatStyle.Flat;
             btnCompras.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCompras.ForeColor = Color.White;
@@ -210,8 +210,8 @@
             // 
             btnProductos.Dock = DockStyle.Top;
             btnProductos.FlatAppearance.BorderSize = 0;
-            btnProductos.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnProductos.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnProductos.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnProductos.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnProductos.FlatStyle = FlatStyle.Flat;
             btnProductos.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnProductos.ForeColor = Color.White;
@@ -232,8 +232,8 @@
             // 
             btnCaja.Dock = DockStyle.Top;
             btnCaja.FlatAppearance.BorderSize = 0;
-            btnCaja.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnCaja.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnCaja.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnCaja.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnCaja.FlatStyle = FlatStyle.Flat;
             btnCaja.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCaja.ForeColor = Color.White;
@@ -254,8 +254,8 @@
             btnReservas.BackgroundImageLayout = ImageLayout.None;
             btnReservas.Dock = DockStyle.Top;
             btnReservas.FlatAppearance.BorderSize = 0;
-            btnReservas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnReservas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnReservas.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnReservas.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnReservas.FlatStyle = FlatStyle.Flat;
             btnReservas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReservas.ForeColor = Color.White;
@@ -276,8 +276,8 @@
             // 
             btnVentas.Dock = DockStyle.Top;
             btnVentas.FlatAppearance.BorderSize = 0;
-            btnVentas.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnVentas.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnVentas.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnVentas.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnVentas.FlatStyle = FlatStyle.Flat;
             btnVentas.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnVentas.ForeColor = Color.White;
@@ -297,8 +297,8 @@
             // 
             btnSalir.Dock = DockStyle.Bottom;
             btnSalir.FlatAppearance.BorderSize = 0;
-            btnSalir.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 64, 64);
-            btnSalir.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 64, 64);
+            btnSalir.FlatAppearance.MouseDownBackColor = Color.Maroon;
+            btnSalir.FlatAppearance.MouseOverBackColor = Color.Maroon;
             btnSalir.FlatStyle = FlatStyle.Flat;
             btnSalir.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSalir.ForeColor = Color.White;
@@ -313,7 +313,7 @@
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = Color.Transparent;
+            panelHeader.BackColor = Color.FromArgb(64, 0, 0);
             panelHeader.Controls.Add(pictureBox1);
             panelHeader.Controls.Add(lblNombre);
             panelHeader.Dock = DockStyle.Top;

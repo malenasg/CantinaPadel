@@ -184,6 +184,31 @@ namespace CantinaPadel.Datos
             return tabla;
         }
 
+        // Método para verificar si un CUIT ya existe en la Base de Datos
+        public bool ExisteCuit(string cuit, int idPersonaExcluida = 0)
+        {
+            // Si el cuit está vacío, no hay nada que buscar
+            if (string.IsNullOrWhiteSpace(cuit)) return false;
+
+            using (MySqlConnection cn = conexion.CrearConexion())
+            {
+                cn.Open();
+
+                // Buscamos si hay otra persona con este mismo CUIT, 
+                // pero ignoramos a la persona que estamos modificando (id_persona != idPersonaExcluida)
+                string query = @"SELECT COUNT(*) FROM persona 
+                         WHERE cuit = @cuit AND id_persona != @id_persona";
+
+                MySqlCommand cmd = new MySqlCommand(query, cn);
+                cmd.Parameters.AddWithValue("@cuit", cuit);
+                cmd.Parameters.AddWithValue("@id_persona", idPersonaExcluida);
+
+                int cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return cantidad > 0; // Si cantidad es mayor a 0, significa que SÍ existe (retorna true)
+            }
+        }
+
         public DataTable ObtenerProveedores()
         {
             DataTable dt = new DataTable();
@@ -394,6 +419,25 @@ namespace CantinaPadel.Datos
                 {
                     transaccion.Rollback();
                     throw new Exception("Error al dar de baja la persona: " + ex.Message);
+                }
+            }
+        }
+
+        public void DarAlta(int idPersona)
+        {
+            using (MySqlConnection cn = conexion.CrearConexion())
+            {
+                cn.Open();
+                try
+                {
+                    string consultaPersona = "UPDATE persona SET activo = TRUE WHERE id_persona = @id_persona";
+                    MySqlCommand cmdPersona = new MySqlCommand(consultaPersona, cn);
+                    cmdPersona.Parameters.AddWithValue("@id_persona", idPersona);
+                    cmdPersona.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al reactivar la persona: " + ex.Message);
                 }
             }
         }

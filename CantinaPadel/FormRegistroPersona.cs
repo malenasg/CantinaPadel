@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Linq;
 using System.Windows.Forms;
 using CantinaPadel.Entidades;
 using CantinaPadel.Negocio;
@@ -36,14 +37,12 @@ namespace CantinaPadel
             clbTipoPersona.Items.Add("Empleado");
             clbTipoPersona.Items.Add("Proveedor");
 
-            // 1. Cargamos las opciones de Condición Fiscal
             cmbCondicionFiscal.Items.Clear();
-            cmbCondicionFiscal.Items.Add("Responsable Inscripto");
-            cmbCondicionFiscal.Items.Add("Monotributo");
-            cmbCondicionFiscal.Items.Add("Exento");
             cmbCondicionFiscal.Items.Add("Consumidor Final");
+            cmbCondicionFiscal.Items.Add("Exento");
+            cmbCondicionFiscal.Items.Add("Monotributo");
+            cmbCondicionFiscal.Items.Add("Responsable Inscripto");
 
-            // 2. Ocultamos los paneles al arrancar (en vez de usar .Enabled)
             panelEmpleado.Visible = false;
             panelProveedor.Visible = false;
 
@@ -74,10 +73,23 @@ namespace CantinaPadel
 
                 txtNombre.Text = fila["nombre"].ToString();
                 txtApellido.Text = fila["apellido"].ToString();
-                txtCuit.Text = fila["cuit"].ToString(); // CUIT queda en los datos generales
-                txtTelefono.Text = fila["telefono"].ToString();
+                mtbCuit.Text = fila["cuit"].ToString();
+                mtbTelefono.Text = fila["telefono"].ToString();
                 txtEmail.Text = fila["email"].ToString();
                 txtDireccion.Text = fila["direccion"].ToString();
+
+                // ---> LÓGICA DEL CHECKBOX "VOLVER A ACTIVAR" <---
+                bool estaActivo = Convert.ToBoolean(fila["activo"]);
+                if (estaActivo)
+                {
+                    chkActivar.Visible = false;
+                }
+                else
+                {
+                    chkActivar.Visible = true;
+                    chkActivar.Checked = false;
+                }
+                // ------------------------------------------------
 
                 bool esCliente = Convert.ToInt32(fila["es_cliente"]) == 1;
                 bool esEmpleado = Convert.ToInt32(fila["es_empleado"]) == 1;
@@ -87,7 +99,6 @@ namespace CantinaPadel
                 MarcarTipoPersona("Empleado", esEmpleado);
                 MarcarTipoPersona("Proveedor", esProveedor);
 
-                // 3. Mostramos/Ocultamos según lo que viene de la base de datos
                 if (esEmpleado)
                 {
                     panelEmpleado.Visible = true;
@@ -146,27 +157,79 @@ namespace CantinaPadel
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            bool esCliente = clbTipoPersona.CheckedItems.Contains("Cliente");
+            bool esEmpleado = clbTipoPersona.CheckedItems.Contains("Empleado");
+            bool esProveedor = clbTipoPersona.CheckedItems.Contains("Proveedor");
+
+            if (!esCliente && !esEmpleado && !esProveedor)
+            {
+                MessageBox.Show("Debe tildar al menos un tipo de persona (Cliente, Empleado o Proveedor).", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MessageBox.Show("El campo Nombre no puede estar vacío.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNombre.Focus();
+                return;
+            }
+            if (txtNombre.Text.Any(char.IsDigit))
+            {
+                MessageBox.Show("El Nombre no puede contener números.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtNombre.Focus();
+                return;
+            }
+
+            if (esCliente || esEmpleado)
+            {
+                if (string.IsNullOrWhiteSpace(txtApellido.Text))
+                {
+                    MessageBox.Show("El campo Apellido es obligatorio para clientes y empleados.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtApellido.Focus();
+                    return;
+                }
+                if (txtApellido.Text.Any(char.IsDigit))
+                {
+                    MessageBox.Show("El Apellido no puede contener números.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtApellido.Focus();
+                    return;
+                }
+            }
+
+            if (esProveedor)
+            {
+                if (string.IsNullOrWhiteSpace(txtRazonSocial.Text))
+                {
+                    MessageBox.Show("La Razón Social es obligatoria para registrar un proveedor.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtRazonSocial.Focus();
+                    return;
+                }
+                if (cmbCondicionFiscal.SelectedIndex == -1 || string.IsNullOrWhiteSpace(cmbCondicionFiscal.Text))
+                {
+                    MessageBox.Show("Debe seleccionar la Condición Fiscal del proveedor.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbCondicionFiscal.Focus();
+                    return;
+                }
+            }
+            // --- FIN DE VALIDACIONES VISUALES ---
+
             try
             {
                 Persona persona = new Persona();
-
                 persona.IdPersona = idPersona;
                 persona.Nombre = txtNombre.Text.Trim();
                 persona.Apellido = txtApellido.Text.Trim();
-                persona.Cuit = txtCuit.Text.Trim();
-                persona.Telefono = txtTelefono.Text.Trim();
+
+                // CORRECCIÓN: Limpiamos las máscaras vacías
+                string cuitLimpio = mtbCuit.Text.Replace("-", "").Replace(" ", "");
+                persona.Cuit = string.IsNullOrEmpty(cuitLimpio) ? "" : mtbCuit.Text.Trim();
+                string telLimpio = mtbTelefono.Text.Replace("-", "").Replace(" ", "").Replace("(", "").Replace(")", "");
+                persona.Telefono = string.IsNullOrEmpty(telLimpio) ? "" : mtbTelefono.Text.Trim();
+
                 persona.Email = txtEmail.Text.Trim();
                 persona.Direccion = txtDireccion.Text.Trim();
 
-                bool esCliente = clbTipoPersona.CheckedItems.Contains("Cliente");
-                bool esEmpleado = clbTipoPersona.CheckedItems.Contains("Empleado");
-                bool esProveedor = clbTipoPersona.CheckedItems.Contains("Proveedor");
-
-                // 5. Asignamos los datos extra SOLO si los checkboxes están marcados
-                if (esEmpleado)
-                {
-                    persona.FechaIngreso = dtpIngreso.Value.Date;
-                }
+                if (esEmpleado) persona.FechaIngreso = dtpIngreso.Value.Date;
 
                 if (esProveedor)
                 {
@@ -176,13 +239,19 @@ namespace CantinaPadel
 
                 if (idPersona == 0)
                 {
-                    // El método Insertar ahora solo recibe 4 parámetros
                     personaNegocio.Insertar(persona, esCliente, esEmpleado, esProveedor);
                     MessageBox.Show("Persona guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     personaNegocio.Modificar(persona, esCliente, esEmpleado, esProveedor);
+
+                    // ---> LÓGICA DE REACTIVACIÓN <---
+                    if (chkActivar.Visible && chkActivar.Checked)
+                    {
+                        personaNegocio.DarAlta(idPersona); // Llama al método que creaste en la Capa de Negocio
+                    }
+
                     MessageBox.Show("Persona modificada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
@@ -200,10 +269,5 @@ namespace CantinaPadel
             this.Close();
         }
 
-        private void txtNombre_TextChanged(object sender, EventArgs e) { }
-        private void lblIngreso_Click(object sender, EventArgs e) { }
-        private void txtRazonSocial_TextChanged(object sender, EventArgs e) { }
-        private void panelEmpleado_Paint(object sender, PaintEventArgs e) { }
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
     }
 }

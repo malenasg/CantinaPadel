@@ -32,8 +32,6 @@ namespace CantinaPadel
             try
             {
                 dgvCompras.DataSource = compraNegocio.ObtenerCompras();
-
-                // Opcional: Ocultar la columna del ID si no quieren que se vea
                 dgvCompras.Columns["id_compra"].Visible = false;
             }
             catch (Exception ex)
@@ -49,13 +47,6 @@ namespace CantinaPadel
             ventanaNueva.ShowDialog();
             // Cuando la ventana se cierra, refrescamos la grilla para ver la nueva compra
             CargarGrilla();
-        }
-
-        // 5. Botón: Aumentos Masivos
-        private void btnAumentar_Click(object sender, EventArgs e)
-        {
-            FormAumentos ventanaAumentos = new FormAumentos();
-            ventanaAumentos.ShowDialog();
         }
 
         // 6. Botón: Anular Compra seleccionada

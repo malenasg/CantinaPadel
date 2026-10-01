@@ -34,20 +34,17 @@ namespace CantinaPadel.Negocio
 
         public DataTable ObtenerProductos()
         {
-            ProductoDatos datos = new ProductoDatos();
-            return datos.ObtenerProductos();
+            return productoDatos.ObtenerProductos();
         }
 
         public DataTable ObtenerMarcas()
         {
-            ProductoDatos datos = new ProductoDatos();
-            return datos.ObtenerMarcas();
+            return productoDatos.ObtenerMarcas();
         }
 
         public DataTable ObtenerCategorias()
         {
-            ProductoDatos datos = new ProductoDatos();
-            return datos.ObtenerCategorias();
+            return productoDatos.ObtenerCategorias();
         }
 
         private void ValidarProducto(Producto producto)
@@ -57,9 +54,10 @@ namespace CantinaPadel.Negocio
                 throw new Exception("El nombre del producto es obligatorio.");
             }
 
-            if (producto.PrecioVenta <= 0)
+            // CAMBIO 1: Ahora permitimos que sea 0 (solo tira error si ponen números negativos)
+            if (producto.PrecioVenta < 0)
             {
-                throw new Exception("El precio de venta debe ser mayor a cero.");
+                throw new Exception("El precio de venta no puede ser negativo.");
             }
 
             if (producto.PrecioCompra < 0)
@@ -72,17 +70,31 @@ namespace CantinaPadel.Negocio
                 throw new Exception("El stock no puede ser un valor negativo.");
             }
 
-            // Regla de negocio de control (opcional, evita pérdidas de dinero)
-            if (producto.PrecioVenta < producto.PrecioCompra)
+            // CAMBIO 2: Solo controlamos la pérdida de dinero si el precio de venta YA se calculó (es mayor a cero)
+            if (producto.PrecioVenta > 0 && producto.PrecioVenta < producto.PrecioCompra)
             {
                 throw new Exception("El precio de venta no puede ser menor al precio de compra.");
             }
         }
 
+        private void CalcularPrecioVenta(Producto producto)
+        {
+            decimal ganancia = (producto.PrecioCompra * producto.PorcentajeGanancia) / 100;
+            producto.PrecioVenta = producto.PrecioCompra + ganancia;
+        }
+
         public void Insertar(Producto producto)
         {
             ValidarProducto(producto);
+
+            if (productoDatos.ExisteCodigo(producto.Codigo))
+            {
+                throw new Exception("Error: El código ingresado ya pertenece a otro producto registrado.");
+            }
+
+            CalcularPrecioVenta(producto);
             productoDatos.Insertar(producto);
+
         }
 
         public void Modificar(Producto producto)
@@ -93,6 +105,13 @@ namespace CantinaPadel.Negocio
             }
 
             ValidarProducto(producto);
+
+            if (productoDatos.ExisteCodigo(producto.Codigo, producto.IdProducto))
+            {
+                throw new Exception("Error: El código ingresado ya pertenece a otro producto registrado.");
+            }
+
+            CalcularPrecioVenta(producto);
             productoDatos.Modificar(producto);
         }
 
@@ -102,8 +121,16 @@ namespace CantinaPadel.Negocio
             {
                 throw new Exception("Debe seleccionar un producto para dar de baja.");
             }
-
             productoDatos.DarBaja(idProducto);
+        }
+
+        public void DarAlta(int idProducto)
+        {
+            if (idProducto <= 0)
+            {
+                throw new Exception("Debe seleccionar un producto para reactivar.");
+            }
+            productoDatos.DarAlta(idProducto);
         }
 
         public void AumentarPreciosMasivo(decimal porcentaje, string columnaFiltro, int idFiltro)
