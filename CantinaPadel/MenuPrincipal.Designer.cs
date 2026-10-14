@@ -161,6 +161,7 @@
             btnCanchas.TextAlign = ContentAlignment.MiddleLeft;
             btnCanchas.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCanchas.UseVisualStyleBackColor = true;
+            btnCanchas.Click += btnCanchas_Click;
             // 
             // btnPersonas
             // 

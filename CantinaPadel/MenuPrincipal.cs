@@ -60,5 +60,11 @@ namespace CantinaPadel
             FormCompras formCompras = new FormCompras();
             AbrirFormularioEnPanel(formCompras);
         }
+
+        private void btnCanchas_Click(object sender, EventArgs e)
+        {
+            FormListadoCanchas formCanchas = new FormListadoCanchas();
+            AbrirFormularioEnPanel(formCanchas);
+        }
     }
 }
