@@ -12,19 +12,39 @@ namespace CantinaPadel.Datos
         public DataTable ObtenerTodas()
         {
             DataTable tabla = new DataTable();
-            try
+            using (MySqlConnection cn = conexion.CrearConexion())
             {
-                using (MySqlConnection cn = conexion.CrearConexion())
+                try
                 {
-                    // Usamos el campo 'estado' que definiste en tu base de datos
-                    string consulta = "SELECT id_cancha, nombre, estado FROM cancha WHERE estado = 'Activa'";
-                    MySqlDataAdapter da = new MySqlDataAdapter(consulta, cn);
+                    string query = "SELECT id_cancha, nombre, estado FROM cancha";
+                    MySqlCommand cmd = new MySqlCommand(query, cn);
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                     da.Fill(tabla);
                 }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al cargar las canchas: " + ex.Message);
+                }
             }
-            catch (Exception ex)
+            return tabla;
+        }
+
+        public DataTable ObtenerActivas()
+        {
+            DataTable tabla = new DataTable();
+            using (MySqlConnection cn = conexion.CrearConexion())
             {
-                throw new Exception("Error al cargar las canchas: " + ex.Message);
+                try
+                {
+                    string query = "SELECT id_cancha, nombre FROM cancha WHERE estado = 'Activa'";
+                    MySqlCommand cmd = new MySqlCommand(query, cn);
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(tabla);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al cargar las canchas activas: " + ex.Message);
+                }
             }
             return tabla;
         }
@@ -35,9 +55,8 @@ namespace CantinaPadel.Datos
             {
                 try
                 {
-                    // Insertamos el nombre y el estado por defecto 'Activa'
-                    string consulta = "INSERT INTO cancha (nombre, estado) VALUES (@nombre, 'Activa')";
-                    MySqlCommand cmd = new MySqlCommand(consulta, cn);
+                    string query = "INSERT INTO cancha (nombre, estado) VALUES (@nombre, 'Activa')";
+                    MySqlCommand cmd = new MySqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@nombre", cancha.Nombre);
 
                     cn.Open();
@@ -45,7 +64,7 @@ namespace CantinaPadel.Datos
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error al insertar cancha: " + ex.Message);
+                    throw new Exception("Error al guardar la cancha: " + ex.Message);
                 }
             }
         }
@@ -56,13 +75,10 @@ namespace CantinaPadel.Datos
             {
                 try
                 {
-                    string consulta = "UPDATE cancha SET nombre = @nombre, estado = @estado WHERE id_cancha = @id";
-
-                    MySqlCommand cmd = new MySqlCommand(consulta, cn);
-
+                    string query = "UPDATE cancha SET nombre = @nombre WHERE id_cancha = @id_cancha";
+                    MySqlCommand cmd = new MySqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@nombre", cancha.Nombre);
-                    cmd.Parameters.AddWithValue("@estado", cancha.Estado);
-                    cmd.Parameters.AddWithValue("@id", cancha.IdCancha);
+                    cmd.Parameters.AddWithValue("@id_cancha", cancha.IdCancha);
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -74,22 +90,24 @@ namespace CantinaPadel.Datos
             }
         }
 
-        public void Eliminar(int idCancha)
+        // Este es el método que vas a enlazar al "btnAlta" inteligente
+        public void CambiarEstado(int idCancha, string nuevoEstado)
         {
             using (MySqlConnection cn = conexion.CrearConexion())
             {
                 try
                 {
-                    string consulta = "UPDATE cancha SET estado = 'Inactiva' WHERE id_cancha = @id";
-                    MySqlCommand cmd = new MySqlCommand(consulta, cn);
-                    cmd.Parameters.AddWithValue("@id", idCancha);
+                    string query = "UPDATE cancha SET estado = @estado WHERE id_cancha = @id_cancha";
+                    MySqlCommand cmd = new MySqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@estado", nuevoEstado);
+                    cmd.Parameters.AddWithValue("@id_cancha", idCancha);
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error al eliminar la cancha: " + ex.Message);
+                    throw new Exception("Error al cambiar el estado de la cancha: " + ex.Message);
                 }
             }
         }

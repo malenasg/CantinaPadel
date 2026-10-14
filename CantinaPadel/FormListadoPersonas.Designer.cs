@@ -156,6 +156,7 @@
             panelSuperior.Name = "panelSuperior";
             panelSuperior.Size = new Size(812, 81);
             panelSuperior.TabIndex = 0;
+            panelSuperior.Paint += panelSuperior_Paint;
             // 
             // lblTitulo
             // 

@@ -11,9 +11,12 @@ namespace CantinaPadel.Entidades
         public TimeSpan HoraFin { get; set; }
 
         // Propiedad extra para mostrar lindo en los combos o grillas (ej: "18:30 - 20:00")
-        public string RangoHorario
+        public string RangoVisual
         {
-            get { return $"{HoraInicio.ToString(@"hh\:mm")} - {HoraFin.ToString(@"hh\:mm")}"; }
+            get
+            {
+                return $"{HoraInicio:hh\\:mm} - {HoraFin:hh\\:mm}";
+            }
         }
     }
 }

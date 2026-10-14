@@ -8,6 +8,6 @@ namespace CantinaPadel.Entidades
     {
         public int IdCancha { get; set; }
         public string Nombre { get; set; }
-        public string Estado { get; set; } // "Activa" o "Inactiva"
+        public string Estado { get; set; }
     }
 }

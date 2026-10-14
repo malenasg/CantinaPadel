@@ -28,30 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            calFecha = new MonthCalendar();
             lblTitulo = new Label();
             panelSuperior = new Panel();
-            dgvReservas = new DataGridView();
-            panel1 = new Panel();
+            panelFiltros = new Panel();
+            txtBuscarCliente = new TextBox();
+            btnAgregar = new Button();
             btnCancelar = new Button();
-            btnNuevo = new Button();
-            panel2 = new Panel();
-            btnHorarios = new Button();
-            btnCanchas = new Button();
-            panel3 = new Panel();
+            cmbCanchaFiltrar = new ComboBox();
+            dtpFechaFiltro = new DateTimePicker();
+            panel1 = new Panel();
+            dgvReservas = new DataGridView();
             panelSuperior.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvReservas).BeginInit();
+            panelFiltros.SuspendLayout();
             panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvReservas).BeginInit();
             SuspendLayout();
-            // 
-            // calFecha
-            // 
-            calFecha.Location = new Point(21, 12);
-            calFecha.Name = "calFecha";
-            calFecha.TabIndex = 0;
-            calFecha.DateChanged += calFecha_DateChanged;
             // 
             // lblTitulo
             // 
@@ -72,108 +63,99 @@
             panelSuperior.Size = new Size(796, 81);
             panelSuperior.TabIndex = 1;
             // 
-            // dgvReservas
+            // panelFiltros
             // 
-            dgvReservas.AllowUserToAddRows = false;
-            dgvReservas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReservas.Dock = DockStyle.Fill;
-            dgvReservas.Location = new Point(0, 0);
-            dgvReservas.Name = "dgvReservas";
-            dgvReservas.ReadOnly = true;
-            dgvReservas.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dgvReservas.Size = new Size(504, 263);
-            dgvReservas.TabIndex = 2;
-            dgvReservas.CellClick += dgvAgenda_CellClick;
-            dgvReservas.CellContentClick += dgvReservas_CellContentClick;
+            panelFiltros.Controls.Add(txtBuscarCliente);
+            panelFiltros.Controls.Add(btnAgregar);
+            panelFiltros.Controls.Add(btnCancelar);
+            panelFiltros.Controls.Add(cmbCanchaFiltrar);
+            panelFiltros.Controls.Add(dtpFechaFiltro);
+            panelFiltros.Dock = DockStyle.Top;
+            panelFiltros.Location = new Point(0, 81);
+            panelFiltros.Name = "panelFiltros";
+            panelFiltros.Size = new Size(796, 39);
+            panelFiltros.TabIndex = 5;
             // 
-            // panel1
+            // txtBuscarCliente
             // 
-            panel1.Controls.Add(btnCancelar);
-            panel1.Controls.Add(btnNuevo);
-            panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 344);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(796, 67);
-            panel1.TabIndex = 3;
+            txtBuscarCliente.Location = new Point(12, 9);
+            txtBuscarCliente.Name = "txtBuscarCliente";
+            txtBuscarCliente.Size = new Size(226, 23);
+            txtBuscarCliente.TabIndex = 3;
+            txtBuscarCliente.TextChanged += txtBuscarCliente_TextChanged;
+            // 
+            // btnAgregar
+            // 
+            btnAgregar.Location = new Point(629, 8);
+            btnAgregar.Name = "btnAgregar";
+            btnAgregar.Size = new Size(75, 23);
+            btnAgregar.TabIndex = 2;
+            btnAgregar.Text = "Agregar";
+            btnAgregar.UseVisualStyleBackColor = true;
+            btnAgregar.Click += btnNuevaReserva_Click;
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(658, 35);
+            btnCancelar.Location = new Point(710, 8);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(130, 23);
-            btnCancelar.TabIndex = 1;
-            btnCancelar.Text = "Cancelar reserva";
+            btnCancelar.Size = new Size(75, 23);
+            btnCancelar.TabIndex = 0;
+            btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             btnCancelar.Click += btnCancelar_Click;
             // 
-            // btnNuevo
+            // cmbCanchaFiltrar
             // 
-            btnNuevo.Location = new Point(658, 6);
-            btnNuevo.Name = "btnNuevo";
-            btnNuevo.Size = new Size(130, 23);
-            btnNuevo.TabIndex = 0;
-            btnNuevo.Text = "Nueva reserva";
-            btnNuevo.UseVisualStyleBackColor = true;
-            btnNuevo.Click += btnNuevaReserva_Click;
+            cmbCanchaFiltrar.FormattingEnabled = true;
+            cmbCanchaFiltrar.Location = new Point(244, 10);
+            cmbCanchaFiltrar.Name = "cmbCanchaFiltrar";
+            cmbCanchaFiltrar.Size = new Size(121, 23);
+            cmbCanchaFiltrar.TabIndex = 1;
+            cmbCanchaFiltrar.SelectedIndexChanged += cmbCanchaFiltrar_SelectedIndexChanged;
             // 
-            // panel2
+            // dtpFechaFiltro
             // 
-            panel2.Controls.Add(btnHorarios);
-            panel2.Controls.Add(btnCanchas);
-            panel2.Controls.Add(calFecha);
-            panel2.Dock = DockStyle.Left;
-            panel2.Location = new Point(0, 81);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(292, 263);
-            panel2.TabIndex = 4;
+            dtpFechaFiltro.Format = DateTimePickerFormat.Short;
+            dtpFechaFiltro.Location = new Point(371, 10);
+            dtpFechaFiltro.Name = "dtpFechaFiltro";
+            dtpFechaFiltro.Size = new Size(143, 23);
+            dtpFechaFiltro.TabIndex = 0;
+            dtpFechaFiltro.ValueChanged += dtpFechaFiltro_ValueChanged;
             // 
-            // btnHorarios
+            // panel1
             // 
-            btnHorarios.Location = new Point(29, 217);
-            btnHorarios.Name = "btnHorarios";
-            btnHorarios.Size = new Size(103, 23);
-            btnHorarios.TabIndex = 2;
-            btnHorarios.Text = "CRUD Horarios";
-            btnHorarios.UseVisualStyleBackColor = true;
-            btnHorarios.Click += btnHorarios_Click;
+            panel1.Controls.Add(dgvReservas);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 120);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(796, 291);
+            panel1.TabIndex = 6;
             // 
-            // btnCanchas
+            // dgvReservas
             // 
-            btnCanchas.Location = new Point(29, 184);
-            btnCanchas.Name = "btnCanchas";
-            btnCanchas.Size = new Size(103, 23);
-            btnCanchas.TabIndex = 1;
-            btnCanchas.Text = "CRUD Canchas";
-            btnCanchas.UseVisualStyleBackColor = true;
-            btnCanchas.Click += btnCanchas_Click;
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(dgvReservas);
-            panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(292, 81);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(504, 263);
-            panel3.TabIndex = 5;
+            dgvReservas.Location = new Point(12, 6);
+            dgvReservas.Name = "dgvReservas";
+            dgvReservas.Size = new Size(772, 273);
+            dgvReservas.TabIndex = 0;
+            dgvReservas.CellContentClick += dgvReservas_CellContentClick_1;
             // 
             // FormReservas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(796, 411);
-            Controls.Add(panel3);
-            Controls.Add(panel2);
             Controls.Add(panel1);
+            Controls.Add(panelFiltros);
             Controls.Add(panelSuperior);
             Name = "FormReservas";
             Text = "FormReservas";
             Load += FormReservas_Load;
             panelSuperior.ResumeLayout(false);
             panelSuperior.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvReservas).EndInit();
+            panelFiltros.ResumeLayout(false);
+            panelFiltros.PerformLayout();
             panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvReservas).EndInit();
             ResumeLayout(false);
         }
 
@@ -182,13 +164,15 @@
         private MonthCalendar calFecha;
         private Label lblTitulo;
         private Panel panelSuperior;
-        private DataGridView dgvReservas;
-        private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
+        private Panel panelFiltros;
+        private TextBox txtBuscarCliente;
+        private Button btnAgregar;
         private Button btnCancelar;
+        private ComboBox cmbCanchaFiltrar;
+        private DateTimePicker dtpFechaFiltro;
+        private Panel panel1;
+        private DataGridView dgvReservas;
         private Button btnNuevo;
-        private Button btnHorarios;
-        private Button btnCanchas;
+
     }
 }

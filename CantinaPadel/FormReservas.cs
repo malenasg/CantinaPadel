@@ -25,9 +25,9 @@ namespace CantinaPadel
         {
             try
             {
-                // Traemos TODAS las reservas usando el método de Male
+                // Traemos TODAS las reservas usando el método de negocio
                 todasLasReservas = reservaNegocio.ObtenerReservas();
-                FiltrarPorFecha(calFecha.SelectionStart); // Filtramos por el día de hoy
+                FiltrarPorFecha(dtpFechaFiltro.Value.Date); // Filtramos por la fecha seleccionada en el calendario)
             }
             catch (Exception ex)
             {
@@ -47,17 +47,11 @@ namespace CantinaPadel
             }
         }
 
-        // Cada vez que el usuario hace clic en otro día del almanaque
-        private void calFecha_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            FiltrarPorFecha(calFecha.SelectionStart);
-            idReservaSeleccionada = null; // Limpiamos la selección
-        }
 
         private void btnNuevaReserva_Click(object sender, EventArgs e)
         {
-            // Abrimos la ventanita que armamos en el Paso 1, pasándole el día seleccionado
-            FormNuevaReserva formNueva = new FormNuevaReserva(calFecha.SelectionStart);
+            // Abrimos la ventanita pasándole el día seleccionado
+            FormNuevaReserva formNueva = new FormNuevaReserva(dtpFechaFiltro.Value.Date);
 
             // Si el usuario guardó todo bien en la ventanita, recargamos la grilla para que aparezca
             if (formNueva.ShowDialog() == DialogResult.OK)
@@ -66,12 +60,18 @@ namespace CantinaPadel
             }
         }
 
-        private void dgvAgenda_CellClick(object sender, DataGridViewCellEventArgs e)
+        // Seleccionamos la reserva al hacer clic en cualquier parte de la fila
+        private void dgvReservas_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow fila = dgvReservas.Rows[e.RowIndex];
-                idReservaSeleccionada = Convert.ToInt32(fila.Cells["id_reserva"].Value);
+
+                // Nos aseguramos de que la celda no esté vacía antes de convertirla
+                if (fila.Cells["id_reserva"].Value != DBNull.Value)
+                {
+                    idReservaSeleccionada = Convert.ToInt32(fila.Cells["id_reserva"].Value);
+                }
             }
         }
 
@@ -99,19 +99,66 @@ namespace CantinaPadel
             }
         }
 
-        private void btnCanchas_Click(object sender, EventArgs e)
-        {
-            FormCanchas pantallaCanchas = new FormCanchas();
-            pantallaCanchas.ShowDialog();
-        }
-
-        private void btnHorarios_Click(object sender, EventArgs e)
-        {
-            FormHorarios pantallaHorarios = new FormHorarios();
-            pantallaHorarios.ShowDialog();
-        }
-
         private void dgvReservas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Lo dejamos vacío, ya estamos usando CellClick que es más cómodo para seleccionar filas enteras
+        }
+
+        // ¡EL EVENTO CORRECTO! txtBuscarCliente_KeyDown
+        private void txtBuscarCliente_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Verificamos si la tecla que apretó fue el Enter
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Evitamos el sonido de "ding" molesto de Windows
+                e.SuppressKeyPress = true;
+
+                if (!string.IsNullOrWhiteSpace(txtBuscarCliente.Text))
+                {
+                    try
+                    {
+                        DataTable dtHistorial = reservaNegocio.BuscarPorCliente(txtBuscarCliente.Text);
+                        dgvReservas.DataSource = dtHistorial;
+
+                        if (dgvReservas.Columns.Contains("id_reserva"))
+                            dgvReservas.Columns["id_reserva"].Visible = false;
+
+                        if (dtHistorial.Rows.Count == 0)
+                        {
+                            MessageBox.Show("No se encontraron reservas.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    // Si el texto está vacío y aprieta Enter, vuelve a mostrar las reservas del calendario
+                    FiltrarPorFecha(calFecha.SelectionStart);
+                }
+            }
+        }
+
+        private void cmbCanchaFiltrar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaFiltro_ValueChanged(object sender, EventArgs e)
+        {
+            FiltrarPorFecha(dtpFechaFiltro.Value.Date);
+            idReservaSeleccionada = null; 
+            txtBuscarCliente.Clear(); 
+        }
+
+        private void txtBuscarCliente_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvReservas_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
 
         }

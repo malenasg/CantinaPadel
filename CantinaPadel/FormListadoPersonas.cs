@@ -158,5 +158,10 @@ namespace CantinaPadel
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void panelSuperior_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

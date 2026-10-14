@@ -18,25 +18,23 @@ namespace CantinaPadel.Datos
                 {
                     try
                     {
-                        // PASO 1: Guardar la cabecera de la compra
                         string queryCompra = @"
-                            INSERT INTO compra (fecha, total, estado, id_proveedor) 
-                            VALUES (@fecha, @total, 'ACTIVA', @id_proveedor);
-                            SELECT LAST_INSERT_ID();";
+    INSERT INTO compra (fecha, total, estado, id_proveedor, id_usuario) 
+    VALUES (@fecha, @total, 'ACTIVA', @id_proveedor, @id_usuario);
+    SELECT LAST_INSERT_ID();";
 
                         MySqlCommand cmdCompra = new MySqlCommand(queryCompra, cn, transaccion);
                         cmdCompra.Parameters.AddWithValue("@fecha", nuevaCompra.Fecha);
                         cmdCompra.Parameters.AddWithValue("@total", nuevaCompra.Total);
                         cmdCompra.Parameters.AddWithValue("@id_proveedor", nuevaCompra.IdProveedor);
+                        // cmdCompra.Parameters.AddWithValue("@id_usuario", nuevaCompra.IdUsuario);
 
                         int idCompraGenerado = Convert.ToInt32(cmdCompra.ExecuteScalar());
 
-                        // PASO 2 y 3: Guardar detalles y actualizar stock + precios en cadena
                         string queryDetalle = @"
                             INSERT INTO detalle_compra (id_compra, id_producto, cantidad, precio_unitario, subtotal) 
                             VALUES (@id_compra, @id_producto, @cantidad, @precio_unitario, @subtotal)";
 
-                        // Actualiza el stock, fija el nuevo costo y recalcula el precio de venta usando el porcentaje de ganancia
                         string queryStockYPrecios = @"
                             UPDATE producto 
                             SET stock = stock + @cantidad,
@@ -46,7 +44,6 @@ namespace CantinaPadel.Datos
 
                         foreach (DetalleCompra detalle in nuevaCompra.Detalles)
                         {
-                            // 2. Guardamos el renglón del detalle
                             MySqlCommand cmdDetalle = new MySqlCommand(queryDetalle, cn, transaccion);
                             cmdDetalle.Parameters.AddWithValue("@id_compra", idCompraGenerado);
                             cmdDetalle.Parameters.AddWithValue("@id_producto", detalle.IdProducto);
@@ -55,7 +52,6 @@ namespace CantinaPadel.Datos
                             cmdDetalle.Parameters.AddWithValue("@subtotal", detalle.Subtotal);
                             cmdDetalle.ExecuteNonQuery();
 
-                            // 3. Actualizamos stock y precios automáticamente
                             MySqlCommand cmdStockYPrecios = new MySqlCommand(queryStockYPrecios, cn, transaccion);
                             cmdStockYPrecios.Parameters.AddWithValue("@cantidad", detalle.Cantidad);
                             cmdStockYPrecios.Parameters.AddWithValue("@precio_unitario", detalle.PrecioUnitario);

@@ -17,6 +17,7 @@ namespace CantinaPadel
         PersonaNegocio personaNegocio = new PersonaNegocio();
 
         int idPersona = 0;
+        private bool estaActivoPersona = true;
 
         public FormRegistroPersona()
         {
@@ -49,11 +50,13 @@ namespace CantinaPadel
             if (idPersona > 0)
             {
                 btnModificar.Text = "Modificar";
+                btnAlta.Visible = true;
                 CargarDatosPersona();
             }
             else
             {
                 btnModificar.Text = "Guardar";
+                btnAlta.Visible = false;
             }
         }
 
@@ -79,15 +82,20 @@ namespace CantinaPadel
                 txtDireccion.Text = fila["direccion"].ToString();
 
                 // ---> LÓGICA DEL CHECKBOX "VOLVER A ACTIVAR" <---
-                bool estaActivo = Convert.ToBoolean(fila["activo"]);
-                if (estaActivo)
+                estaActivoPersona = Convert.ToBoolean(fila["activo"]);
+
+                // Configuramos el botón btnAlta de forma inteligente
+                if (estaActivoPersona)
                 {
-                    chkActivar.Visible = false;
+                    btnAlta.Text = "Dar de baja";
+                    btnAlta.BackColor = System.Drawing.Color.Maroon; // Bordó
+                    btnAlta.ForeColor = System.Drawing.Color.White;
                 }
                 else
                 {
-                    chkActivar.Visible = true;
-                    chkActivar.Checked = false;
+                    btnAlta.Text = "Reactivar";
+                    btnAlta.BackColor = System.Drawing.Color.Black; // Negro
+                    btnAlta.ForeColor = System.Drawing.Color.White;
                 }
                 // ------------------------------------------------
 
@@ -246,12 +254,6 @@ namespace CantinaPadel
                 {
                     personaNegocio.Modificar(persona, esCliente, esEmpleado, esProveedor);
 
-                    // ---> LÓGICA DE REACTIVACIÓN <---
-                    if (chkActivar.Visible && chkActivar.Checked)
-                    {
-                        personaNegocio.DarAlta(idPersona); // Llama al método que creaste en la Capa de Negocio
-                    }
-
                     MessageBox.Show("Persona modificada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
@@ -269,5 +271,42 @@ namespace CantinaPadel
             this.Close();
         }
 
+        private void btnAlta_Click(object sender, EventArgs e)
+        {
+            if (idPersona > 0)
+            {
+                try
+                {
+                    if (estaActivoPersona) // Si está activo, damos de baja
+                    {
+                        DialogResult respuesta = MessageBox.Show("¿Está seguro de que desea dar de baja a esta persona?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                        if (respuesta == DialogResult.Yes)
+                        {
+                            personaNegocio.DarBaja(idPersona);
+                            MessageBox.Show("Persona dada de baja correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK;
+                            this.Close();
+                        }
+                    }
+                    else // Si está inactivo, reactivamos
+                    {
+                        DialogResult respuesta = MessageBox.Show("¿Desea volver a dar de alta a esta persona?", "Confirmar Reactivación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (respuesta == DialogResult.Yes)
+                        {
+                            personaNegocio.DarAlta(idPersona);
+                            MessageBox.Show("Persona reactivada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.DialogResult = DialogResult.OK;
+                            this.Close();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }

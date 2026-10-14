@@ -61,6 +61,13 @@ namespace CantinaPadel
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            // Validación de seguridad para el precio
+            if (!decimal.TryParse(txtPrecio.Text, out decimal precioValidado))
+            {
+                MessageBox.Show("Por favor, ingrese un precio válido (solo números, sin letras).", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Cortamos la ejecución acá para que no pinche
+            }
+
             try
             {
                 // 1. Armamos la reserva con lo que elegiste en los controles
@@ -70,7 +77,7 @@ namespace CantinaPadel
                     IdCancha = Convert.ToInt32(cmbCancha.SelectedValue),
                     IdHorario = Convert.ToInt32(cmbHorario.SelectedValue),
                     Fecha = dtpReserva.Value.Date,
-                    Precio = Convert.ToDecimal(txtPrecio.Text),
+                    Precio = precioValidado, // Usamos el precio que ya pasó la prueba
                     TipoReserva = chckTurnoFijo.Checked ? "Fija" : "Diaria"
                 };
 
@@ -85,17 +92,18 @@ namespace CantinaPadel
                 }
                 else
                 {
+                    // OJO ACÁ: Si tu método se llama AlquilarTurno en vez de RegistrarReserva, cambialo en la línea de abajo
                     reservaNegocio.RegistrarReserva(nuevaReserva);
                     MessageBox.Show("Reserva diaria guardada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                // Cerramos la ventanita
+                // Cerramos la ventanita informando que todo salió OK
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                // Si Malena detecta que la cancha está ocupada, el error salta acá
+                // Si la cancha está ocupada, el error salta acá
                 MessageBox.Show(ex.Message, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

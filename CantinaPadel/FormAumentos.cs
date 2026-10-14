@@ -38,7 +38,8 @@ namespace CantinaPadel
         {
             if (cmbCriterio.SelectedItem == null) return;
 
-            string criterio = cmbCriterio.SelectedItem.ToString();
+            // Usamos operador seguro y valor por defecto para evitar advertencias de posible null
+            string criterio = cmbCriterio.SelectedItem?.ToString() ?? string.Empty;
             lblElemento.Text = "Seleccione " + criterio + ":";
 
             try
@@ -85,9 +86,10 @@ namespace CantinaPadel
             {
                 try
                 {
-                    string criterio = cmbCriterio.SelectedItem.ToString();
-                    int idElemento = Convert.ToInt32(cmbElemento.SelectedValue);
-                    decimal porcentaje = Convert.ToDecimal(nudPorcentaje.Value);
+                    // Usamos el operador ! para indicar al compilador que no es null (ya comprobado) y evitamos conversiones innecesarias
+                    string criterio = cmbCriterio.SelectedItem!.ToString()!;
+                    int idElemento = Convert.ToInt32(cmbElemento.SelectedValue!);
+                    decimal porcentaje = nudPorcentaje.Value;
 
                     string columnaFiltro = "";
                     if (criterio == "Marca") columnaFiltro = "id_marca";

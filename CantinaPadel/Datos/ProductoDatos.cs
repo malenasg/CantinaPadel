@@ -305,8 +305,6 @@ namespace CantinaPadel.Datos
             {
                 try
                 {
-                    // 1. Validamos que el filtro sea seguro. 
-                    // (Agregué 'id_producto' para cumplir el requerimiento de aumento por unidad/producto individual)
                     if (columnaFiltro != "id_marca" &&
                         columnaFiltro != "id_categoria" &&
                         columnaFiltro != "id_proveedor" &&
@@ -315,13 +313,10 @@ namespace CantinaPadel.Datos
                         throw new Exception("Filtro de aumento no válido.");
                     }
 
-                    // 2. La magia en SQL: 
-                    // - Primero sube el precio de compra según el porcentaje ingresado.
-                    // - Segundo, usa ese NUEVO precio de compra para recalcular el precio de venta usando el margen de ganancia de cada producto.
                     string query = $@"UPDATE producto 
-                              SET precio_compra = precio_compra * (1 + (@porcentaje / 100)),
-                                  precio_venta = precio_compra + ((precio_compra * porcentaje_ganancia) / 100)
-                              WHERE {columnaFiltro} = @id_filtro AND activo = 1";
+                                      SET precio_compra = precio_compra * (1 + (@porcentaje / 100)),
+                                          precio_venta = precio_venta * (1 + (@porcentaje / 100))
+                                      WHERE {columnaFiltro} = @id_filtro AND activo = 1";
 
                     MySqlCommand cmd = new MySqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@porcentaje", porcentaje);

@@ -428,15 +428,35 @@ namespace CantinaPadel.Datos
             using (MySqlConnection cn = conexion.CrearConexion())
             {
                 cn.Open();
+                MySqlTransaction transaccion = cn.BeginTransaction();
+
                 try
                 {
                     string consultaPersona = "UPDATE persona SET activo = TRUE WHERE id_persona = @id_persona";
-                    MySqlCommand cmdPersona = new MySqlCommand(consultaPersona, cn);
+                    MySqlCommand cmdPersona = new MySqlCommand(consultaPersona, cn, transaccion);
                     cmdPersona.Parameters.AddWithValue("@id_persona", idPersona);
                     cmdPersona.ExecuteNonQuery();
+
+                    string consultaCliente = "UPDATE cliente SET activo = TRUE WHERE id_persona = @id_persona";
+                    MySqlCommand cmdCliente = new MySqlCommand(consultaCliente, cn, transaccion);
+                    cmdCliente.Parameters.AddWithValue("@id_persona", idPersona);
+                    cmdCliente.ExecuteNonQuery();
+
+                    string consultaEmpleado = "UPDATE empleado SET activo = TRUE WHERE id_persona = @id_persona";
+                    MySqlCommand cmdEmpleado = new MySqlCommand(consultaEmpleado, cn, transaccion);
+                    cmdEmpleado.Parameters.AddWithValue("@id_persona", idPersona);
+                    cmdEmpleado.ExecuteNonQuery();
+
+                    string consultaProveedor = "UPDATE proveedor SET activo = TRUE WHERE id_persona = @id_persona";
+                    MySqlCommand cmdProveedor = new MySqlCommand(consultaProveedor, cn, transaccion);
+                    cmdProveedor.Parameters.AddWithValue("@id_persona", idPersona);
+                    cmdProveedor.ExecuteNonQuery();
+
+                    transaccion.Commit();
                 }
                 catch (Exception ex)
                 {
+                    transaccion.Rollback();
                     throw new Exception("Error al reactivar la persona: " + ex.Message);
                 }
             }

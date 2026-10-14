@@ -31,10 +31,8 @@
             gbDatos = new GroupBox();
             mtbTelefono = new MaskedTextBox();
             mtbCuit = new MaskedTextBox();
-            btnCancelar = new Button();
             gbTipo = new GroupBox();
             clbTipoPersona = new CheckedListBox();
-            btnModificar = new Button();
             lblDireccion = new Label();
             lblEmail = new Label();
             lblTelefono = new Label();
@@ -45,16 +43,18 @@
             txtEmail = new TextBox();
             txtApellido = new TextBox();
             txtNombre = new TextBox();
+            btnCancelar = new Button();
+            btnModificar = new Button();
             panelEmpleado = new Panel();
             lblIngreso = new Label();
             dtpIngreso = new DateTimePicker();
             panelProveedor = new Panel();
+            txtRazonSocial = new TextBox();
             cmbCondicionFiscal = new ComboBox();
             lblCondicionFiscal = new Label();
             lblRazSoc = new Label();
-            txtRazonSocial = new TextBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
-            chkActivar = new CheckBox();
+            btnAlta = new Button();
             gbDatos.SuspendLayout();
             gbTipo.SuspendLayout();
             panelEmpleado.SuspendLayout();
@@ -101,16 +101,6 @@
             mtbCuit.Size = new Size(219, 23);
             mtbCuit.TabIndex = 1;
             // 
-            // btnCancelar
-            // 
-            btnCancelar.Location = new Point(283, 416);
-            btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(82, 23);
-            btnCancelar.TabIndex = 23;
-            btnCancelar.Text = "Cancelar";
-            btnCancelar.UseVisualStyleBackColor = true;
-            btnCancelar.Click += btnCancelar_Click;
-            // 
             // gbTipo
             // 
             gbTipo.Controls.Add(clbTipoPersona);
@@ -134,16 +124,6 @@
             clbTipoPersona.TabIndex = 0;
             clbTipoPersona.UseTabStops = false;
             clbTipoPersona.ItemCheck += clbTipoPersona_ItemCheck;
-            // 
-            // btnModificar
-            // 
-            btnModificar.Location = new Point(195, 416);
-            btnModificar.Name = "btnModificar";
-            btnModificar.Size = new Size(82, 23);
-            btnModificar.TabIndex = 22;
-            btnModificar.Text = "Guardar";
-            btnModificar.UseVisualStyleBackColor = true;
-            btnModificar.Click += btnModificar_Click;
             // 
             // lblDireccion
             // 
@@ -232,6 +212,26 @@
             txtNombre.Size = new Size(219, 23);
             txtNombre.TabIndex = 0;
             // 
+            // btnCancelar
+            // 
+            btnCancelar.Location = new Point(283, 416);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(82, 23);
+            btnCancelar.TabIndex = 23;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
+            // 
+            // btnModificar
+            // 
+            btnModificar.Location = new Point(195, 416);
+            btnModificar.Name = "btnModificar";
+            btnModificar.Size = new Size(82, 23);
+            btnModificar.TabIndex = 22;
+            btnModificar.Text = "Guardar";
+            btnModificar.UseVisualStyleBackColor = true;
+            btnModificar.Click += btnModificar_Click;
+            // 
             // panelEmpleado
             // 
             panelEmpleado.Controls.Add(lblIngreso);
@@ -272,6 +272,14 @@
             panelProveedor.Size = new Size(343, 55);
             panelProveedor.TabIndex = 24;
             // 
+            // txtRazonSocial
+            // 
+            txtRazonSocial.Location = new Point(116, 3);
+            txtRazonSocial.MaxLength = 30;
+            txtRazonSocial.Name = "txtRazonSocial";
+            txtRazonSocial.Size = new Size(219, 23);
+            txtRazonSocial.TabIndex = 2;
+            // 
             // cmbCondicionFiscal
             // 
             cmbCondicionFiscal.FormattingEnabled = true;
@@ -298,14 +306,6 @@
             lblRazSoc.TabIndex = 12;
             lblRazSoc.Text = "Razón social";
             // 
-            // txtRazonSocial
-            // 
-            txtRazonSocial.Location = new Point(116, 3);
-            txtRazonSocial.MaxLength = 30;
-            txtRazonSocial.Name = "txtRazonSocial";
-            txtRazonSocial.Size = new Size(219, 23);
-            txtRazonSocial.TabIndex = 2;
-            // 
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(panelProveedor);
@@ -315,22 +315,22 @@
             flowLayoutPanel1.Size = new Size(346, 100);
             flowLayoutPanel1.TabIndex = 26;
             // 
-            // chkActivar
+            // btnAlta
             // 
-            chkActivar.AutoSize = true;
-            chkActivar.Location = new Point(20, 418);
-            chkActivar.Name = "chkActivar";
-            chkActivar.Size = new Size(105, 19);
-            chkActivar.TabIndex = 25;
-            chkActivar.Text = "Volver a activar";
-            chkActivar.UseVisualStyleBackColor = true;
+            btnAlta.Location = new Point(12, 416);
+            btnAlta.Name = "btnAlta";
+            btnAlta.Size = new Size(82, 23);
+            btnAlta.TabIndex = 27;
+            btnAlta.Text = "Dar alta";
+            btnAlta.UseVisualStyleBackColor = true;
+            btnAlta.Click += btnAlta_Click;
             // 
             // FormRegistroPersona
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(375, 449);
-            Controls.Add(chkActivar);
+            Controls.Add(btnAlta);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(gbDatos);
             Controls.Add(btnCancelar);
@@ -348,7 +348,6 @@
             panelProveedor.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -379,6 +378,6 @@
         private ComboBox cmbCondicionFiscal;
         private MaskedTextBox mtbTelefono;
         private MaskedTextBox mtbCuit;
-        private CheckBox chkActivar;
+        private Button btnAlta;
     }
 }
